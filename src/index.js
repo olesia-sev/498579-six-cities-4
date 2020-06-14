@@ -5,18 +5,16 @@ import {App} from "./components/app/app.jsx";
 const init = () => {
   const settings = {
     optionsAmount: 500,
-    placeCardTitles: [
+    cardTitles: [
       `Beautiful & luxurious apartment at great location`,
       `Wood and stone place`,
+      `Nice, cozy, warm big bed apartment`,
       `Nice, cozy, warm big bed apartment`
     ],
   };
 
   ReactDOM.render(
-      <App
-        optionsAmount = {settings.optionsAmount}
-        cardTitles = {settings.placeCardTitles}
-      />,
+      <App {...settings}/>,
       document.querySelector(`#root`)
   );
 };
