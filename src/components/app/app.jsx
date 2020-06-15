@@ -2,12 +2,15 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {Main} from '../main/main';
 
+const CardTitleClickHandler = () => {};
+
 const App = (props) => {
   const {optionsAmount, cardTitles} = props;
 
   return <Main
     optionsAmount = {optionsAmount}
     cardTitles = {cardTitles}
+    onCardTitleClick = {CardTitleClickHandler}
   />;
 };
 
