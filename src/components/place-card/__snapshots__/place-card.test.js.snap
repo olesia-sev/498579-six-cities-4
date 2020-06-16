@@ -93,7 +93,7 @@ exports[`PlaceCard should be rendered 1`] = `
         href="#"
         onClick={[Function]}
       >
-        Beautiful flat
+        Test string
       </a>
     </h2>
     <p

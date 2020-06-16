@@ -329,7 +329,7 @@ Array [
                       href="#"
                       onClick={[Function]}
                     >
-                      Beautiful flat
+                      Beautiful apartment
                     </a>
                   </h2>
                   <p
@@ -431,7 +431,7 @@ Array [
                       href="#"
                       onClick={[Function]}
                     >
-                      Wood flat
+                      Wood place
                     </a>
                   </h2>
                   <p
@@ -533,7 +533,7 @@ Array [
                       href="#"
                       onClick={[Function]}
                     >
-                      Big bed flat
+                      Big bed apartment
                     </a>
                   </h2>
                   <p
