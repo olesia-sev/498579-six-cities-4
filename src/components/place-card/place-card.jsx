@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-const PlaceCard = ({title}) => {
+const PlaceCard = ({title, onCardTitleClick}) => {
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
@@ -35,7 +35,9 @@ const PlaceCard = ({title}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <a href="#"
+            onClick={onCardTitleClick}
+          >{title}</a>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
@@ -45,6 +47,11 @@ const PlaceCard = ({title}) => {
 
 PlaceCard.propTypes = {
   title: PropTypes.string.isRequired,
+  onCardTitleClick: PropTypes.func,
+};
+
+PlaceCard.defaultProps = {
+  onCardTitleClick: () => {},
 };
 
 const MemoizedPlaceCard = React.memo(PlaceCard);
