@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {PlaceCard} from "../place-card/place-card";
+import {offersTypeArray} from '../../prop-types/prop-types';
+import {PlacesList} from "../places-list/places-list";
 
-const Main = (props) => {
-  const {optionsAmount, cardTitles} = props;
+const Main = ({optionsAmount, offers}) => {
 
   return (
     <React.Fragment>
@@ -117,13 +117,11 @@ const Main = (props) => {
                    */}
 
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {
-                    cardTitles.map((title, index) => (
-                      <PlaceCard key={`${title}-${index}`} title={title} />
-                    ))
-                  }
-                </div>
+
+                <PlacesList
+                  offers = {offers}
+                />
+
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>
@@ -138,9 +136,7 @@ const Main = (props) => {
 
 Main.propTypes = {
   optionsAmount: PropTypes.number.isRequired,
-  cardTitles: PropTypes.arrayOf(
-      PropTypes.string
-  ).isRequired,
+  offers: offersTypeArray,
 };
 
 export {Main};

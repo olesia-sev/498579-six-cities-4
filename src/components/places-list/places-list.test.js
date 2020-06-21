@@ -1,12 +1,11 @@
 import React from "react";
-import {App} from "./app";
 import renderer from "react-test-renderer";
-import {number, cardDataArray} from "../../utils/test.utils";
+import {PlacesList} from "./places-list";
+import {cardDataArray} from "../../utils/test.utils";
 
-it(`App should be rendered`, () => {
+it(`Places list should be rendered`, () => {
   const tree = renderer
-    .create(<App
-      optionsAmount = {number}
+    .create(<PlacesList
       offers = {cardDataArray}
     />)
     .toJSON();
