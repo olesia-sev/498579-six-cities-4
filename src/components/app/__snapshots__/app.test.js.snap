@@ -258,7 +258,7 @@ Array [
                       alt="Place image"
                       className="place-card__image"
                       height="200"
-                      src="path"
+                      src="https://placedog.net/260/200?id=2"
                       width="260"
                     />
                   </a>
@@ -356,7 +356,7 @@ Array [
                       alt="Place image"
                       className="place-card__image"
                       height="200"
-                      src="path"
+                      src="https://placedog.net/260/200?id=3"
                       width="260"
                     />
                   </a>
