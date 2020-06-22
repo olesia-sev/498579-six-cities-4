@@ -1,7 +1,9 @@
+import {getRandomNumberInRange} from '../utils/functions';
+
 export default [
   {
     id: 1,
-    img: `https://placedog.net/260/200?id=${Math.floor(Math.random() * 100) + 1}`,
+    img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     price: 50,
     title: `Nice, cozy, warm big bed apartment`,
     placeType: `Apartment`,
@@ -11,7 +13,7 @@ export default [
   },
   {
     id: 2,
-    img: `https://placedog.net/260/200?id=${Math.floor(Math.random() * 100) + 1}`,
+    img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     price: 80,
     title: `Wood and stone place`,
     placeType: `Private room`,
@@ -21,7 +23,7 @@ export default [
   },
   {
     id: 3,
-    img: `https://placedog.net/260/200?id=${Math.floor(Math.random() * 100) + 1}`,
+    img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     price: 120,
     title: `Wood place`,
     placeType: `Apartment`,
@@ -31,7 +33,7 @@ export default [
   },
   {
     id: 4,
-    img: `https://placedog.net/260/200?id=${Math.floor(Math.random() * 100) + 1}`,
+    img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     price: 200,
     title: `Nice flat`,
     placeType: `Apartment`,
