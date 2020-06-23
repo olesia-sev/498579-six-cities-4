@@ -1,13 +1,15 @@
 import React from "react";
 import {PlaceCard} from "./place-card";
 import renderer from "react-test-renderer";
-import {testString, emptyFunction} from "../../utils/test.utils";
+import {cardDataArray, emptyFunction} from "../../utils/test.utils";
 
 it(`PlaceCard should be rendered`, () => {
   const tree = renderer
     .create(<PlaceCard
-      title = {testString}
+      offer = {cardDataArray[0]}
       onCardTitleClick={emptyFunction}
+      onMouseEnter={emptyFunction}
+      setActiveOffer={emptyFunction}
     />)
     .toJSON();
 

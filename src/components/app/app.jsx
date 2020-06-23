@@ -1,24 +1,18 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import {offersTypeArray} from '../../prop-types/prop-types';
 import {Main} from '../main/main';
 
-const titleClickHandler = () => {};
-
-const App = (props) => {
-  const {optionsAmount, cardTitles} = props;
-
+const App = ({optionsAmount, offers}) => {
   return <Main
     optionsAmount = {optionsAmount}
-    cardTitles = {cardTitles}
-    onCardTitleClick = {titleClickHandler}
+    offers = {offers}
   />;
 };
 
 App.propTypes = {
   optionsAmount: PropTypes.number.isRequired,
-  cardTitles: PropTypes.arrayOf(
-      PropTypes.string
-  ).isRequired,
+  offers: offersTypeArray,
 };
 
 export {App};

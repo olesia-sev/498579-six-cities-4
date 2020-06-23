@@ -1,16 +1,22 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import {offerType} from '../../prop-types/prop-types';
 
-const PlaceCard = ({title, onCardTitleClick}) => {
+const PlaceCard = ({setActiveOffer, onCardTitleClick, offer}) => {
+  const {img, price, title, placeType, rating, saved, premium} = offer;
   return (
-    <article className="cities__place-card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+    <article
+      className="cities__place-card place-card"
+      onMouseEnter={() => setActiveOffer(offer)}
+    >
+      {premium ?
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div> : ``}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image"
-            src="img/apartment-01.jpg" width="260" height="200"
+            src={img} width="260" height="200"
             alt="Place image"
           />
         </a>
@@ -18,10 +24,13 @@ const PlaceCard = ({title, onCardTitleClick}) => {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;120</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button
+            className={`place-card__bookmark-button button ${saved ? `place-card__bookmark-button--active` : ``}`}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark" />
             </svg>
@@ -30,7 +39,7 @@ const PlaceCard = ({title, onCardTitleClick}) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `80%`}} />
+            <span style={{width: `${rating * 20}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -39,15 +48,16 @@ const PlaceCard = ({title, onCardTitleClick}) => {
             onClick={onCardTitleClick}
           >{title}</a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{placeType}</p>
       </div>
     </article>
   );
 };
 
 PlaceCard.propTypes = {
-  title: PropTypes.string.isRequired,
+  setActiveOffer: PropTypes.func.isRequired,
   onCardTitleClick: PropTypes.func,
+  offer: offerType
 };
 
 PlaceCard.defaultProps = {

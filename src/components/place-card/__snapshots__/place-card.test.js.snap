@@ -3,6 +3,7 @@
 exports[`PlaceCard should be rendered 1`] = `
 <article
   className="cities__place-card place-card"
+  onMouseEnter={[Function]}
 >
   <div
     className="place-card__mark"
@@ -21,7 +22,7 @@ exports[`PlaceCard should be rendered 1`] = `
         alt="Place image"
         className="place-card__image"
         height="200"
-        src="img/apartment-01.jpg"
+        src="https://placedog.net/260/200?id=2"
         width="260"
       />
     </a>
@@ -38,7 +39,8 @@ exports[`PlaceCard should be rendered 1`] = `
         <b
           className="place-card__price-value"
         >
-          €120
+          €
+          150
         </b>
         <span
           className="place-card__price-text"
@@ -47,7 +49,7 @@ exports[`PlaceCard should be rendered 1`] = `
         </span>
       </div>
       <button
-        className="place-card__bookmark-button button"
+        className="place-card__bookmark-button button place-card__bookmark-button--active"
         type="button"
       >
         <svg
@@ -93,13 +95,13 @@ exports[`PlaceCard should be rendered 1`] = `
         href="#"
         onClick={[Function]}
       >
-        Test string
+        Title
       </a>
     </h2>
     <p
       className="place-card__type"
     >
-      Apartment
+      Flat
     </p>
   </div>
 </article>
