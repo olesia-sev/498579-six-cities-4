@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import {offersTypeArray} from '../../prop-types/prop-types';
 import {PlacesList} from "../places-list/places-list";
 
-const Main = ({optionsAmount, offers}) => {
-
+const Main = ({setActiveOffer, optionsAmount, offers}) => {
   return (
     <React.Fragment>
       <div style={{display: `none`}}>
@@ -120,6 +119,7 @@ const Main = ({optionsAmount, offers}) => {
 
                 <PlacesList
                   offers = {offers}
+                  setActiveOffer={setActiveOffer}
                 />
 
               </section>
@@ -135,6 +135,7 @@ const Main = ({optionsAmount, offers}) => {
 };
 
 Main.propTypes = {
+  setActiveOffer: PropTypes.func.isRequired,
   optionsAmount: PropTypes.number.isRequired,
   offers: offersTypeArray,
 };

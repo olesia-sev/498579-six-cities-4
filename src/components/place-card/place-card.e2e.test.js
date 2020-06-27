@@ -9,35 +9,24 @@ Enzyme.configure({
 });
 
 describe(`Place card test`, () => {
-  it(`Title button clicked`, () => {
-    const onCardTitleClick = jest.fn();
+  it(`Active card saved in state`, () => {
+    const evt = {
+      preventDefault: jest.fn(),
+    };
 
+    const setActiveOffer = jest.fn();
     const placeCard = shallow(
         <PlaceCard
           offer={cardDataArray[0]}
-          onCardTitleClick={onCardTitleClick}
+          setActiveOffer={setActiveOffer}
         />
     );
 
-    const titleButton = placeCard.find(`.place-card__name a`);
-    titleButton.simulate(`click`);
+    const offerTitle = placeCard.find(`.place-card__name a`);
+    offerTitle.simulate(`click`, evt);
 
-    expect(onCardTitleClick.mock.calls.length).toBe(1);
-  });
-
-  it(`Hovered card saved in state`, () => {
-    const onCardMouseEnter = jest.fn();
-    const placeCard = shallow(
-        <PlaceCard
-          offer={cardDataArray[0]}
-          setActiveOffer={onCardMouseEnter}
-        />
-    );
-
-    const offer = placeCard.find(`.place-card`);
-    offer.simulate(`mouseenter`);
-
-    expect(onCardMouseEnter).toHaveBeenCalledTimes(1);
-    expect(onCardMouseEnter).toHaveBeenCalledWith(cardDataArray[0]);
+    expect(evt.preventDefault).toHaveBeenCalledTimes(1);
+    expect(setActiveOffer).toHaveBeenCalledTimes(1);
+    expect(setActiveOffer).toHaveBeenCalledWith(cardDataArray[0]);
   });
 });

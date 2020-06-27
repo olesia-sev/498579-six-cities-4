@@ -7,8 +7,6 @@ it(`PlaceCard should be rendered`, () => {
   const tree = renderer
     .create(<PlaceCard
       offer = {cardDataArray[0]}
-      onCardTitleClick={emptyFunction}
-      onMouseEnter={emptyFunction}
       setActiveOffer={emptyFunction}
     />)
     .toJSON();

@@ -2,12 +2,17 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {offerType} from '../../prop-types/prop-types';
 
-const PlaceCard = ({setActiveOffer, onCardTitleClick, offer}) => {
+const PlaceCard = ({setActiveOffer, offer}) => {
   const {img, price, title, placeType, rating, saved, premium} = offer;
+
+  const onCardTitleClick = (evt) => {
+    evt.preventDefault();
+    setActiveOffer(offer);
+  };
+
   return (
     <article
       className="cities__place-card place-card"
-      onMouseEnter={() => setActiveOffer(offer)}
     >
       {premium ?
         <div className="place-card__mark">
@@ -44,8 +49,7 @@ const PlaceCard = ({setActiveOffer, onCardTitleClick, offer}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#"
-            onClick={onCardTitleClick}
+          <a href="#" onClick={onCardTitleClick}
           >{title}</a>
         </h2>
         <p className="place-card__type">{placeType}</p>
@@ -56,12 +60,7 @@ const PlaceCard = ({setActiveOffer, onCardTitleClick, offer}) => {
 
 PlaceCard.propTypes = {
   setActiveOffer: PropTypes.func.isRequired,
-  onCardTitleClick: PropTypes.func,
   offer: offerType
-};
-
-PlaceCard.defaultProps = {
-  onCardTitleClick: () => {},
 };
 
 const MemoizedPlaceCard = React.memo(PlaceCard);
