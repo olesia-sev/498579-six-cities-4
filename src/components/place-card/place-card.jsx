@@ -1,14 +1,9 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import {offerType} from '../../prop-types/prop-types';
+import {Link} from "react-router-dom";
 
-const PlaceCard = ({setActiveOffer, offer}) => {
-  const {img, price, title, placeType, rating, saved, premium} = offer;
-
-  const onCardTitleClick = (evt) => {
-    evt.preventDefault();
-    setActiveOffer(offer);
-  };
+const PlaceCard = ({offer}) => {
+  const {id, img, price, title, placeType, rating, saved, premium} = offer;
 
   return (
     <article
@@ -49,8 +44,7 @@ const PlaceCard = ({setActiveOffer, offer}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#" onClick={onCardTitleClick}
-          >{title}</a>
+          <Link to={`/offers/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>
@@ -59,7 +53,6 @@ const PlaceCard = ({setActiveOffer, offer}) => {
 };
 
 PlaceCard.propTypes = {
-  setActiveOffer: PropTypes.func.isRequired,
   offer: offerType
 };
 

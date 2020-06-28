@@ -3,30 +3,24 @@ import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import {PlaceCard} from "./place-card";
 import {cardDataArray} from "../../utils/test.utils";
+import {PlaceCardDetail} from "../place-card-detail/place-card-detail";
 
 Enzyme.configure({
   adapter: new Adapter(),
 });
 
 describe(`Place card test`, () => {
-  it(`Active card saved in state`, () => {
-    const evt = {
-      preventDefault: jest.fn(),
-    };
+  it(`Title's link is correct`, () => {
 
-    const setActiveOffer = jest.fn();
     const placeCard = shallow(
         <PlaceCard
           offer={cardDataArray[0]}
-          setActiveOffer={setActiveOffer}
-        />
+        >
+          <PlaceCardDetail offers={cardDataArray}/>
+        </PlaceCard>
     );
 
-    const offerTitle = placeCard.find(`.place-card__name a`);
-    offerTitle.simulate(`click`, evt);
+    expect(placeCard.find(`Link`).props().to).toBe(`/offers/${cardDataArray[0].id}`);
 
-    expect(evt.preventDefault).toHaveBeenCalledTimes(1);
-    expect(setActiveOffer).toHaveBeenCalledTimes(1);
-    expect(setActiveOffer).toHaveBeenCalledWith(cardDataArray[0]);
   });
 });

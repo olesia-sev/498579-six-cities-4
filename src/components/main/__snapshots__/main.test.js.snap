@@ -327,7 +327,7 @@ Array [
                     className="place-card__name"
                   >
                     <a
-                      href="#"
+                      href="/offers/10"
                       onClick={[Function]}
                     >
                       Title
@@ -424,7 +424,7 @@ Array [
                     className="place-card__name"
                   >
                     <a
-                      href="#"
+                      href="/offers/100"
                       onClick={[Function]}
                     >
                       Title test

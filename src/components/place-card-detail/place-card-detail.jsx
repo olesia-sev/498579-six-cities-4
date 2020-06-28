@@ -1,7 +1,15 @@
 import React from "react";
-import {offerType} from '../../prop-types/prop-types';
+import {useParams} from "react-router-dom";
+import {offersTypeArray} from '../../prop-types/prop-types';
 
-const PlaceCardDetail = ({offer}) => {
+const PlaceCardDetail = ({offers}) => {
+  let {id} = useParams();
+  const currentOffer = offers.find((obj) => obj.id === +id);
+
+  if (!currentOffer) {
+    return null;
+  }
+
   const {
     images,
     price,
@@ -17,7 +25,7 @@ const PlaceCardDetail = ({offer}) => {
     hostAvatar,
     userPro,
     description,
-  } = offer;
+  } = currentOffer;
 
   return (
     <React.Fragment>
@@ -27,7 +35,7 @@ const PlaceCardDetail = ({offer}) => {
             <div className="header__wrapper">
               <div className="header__left">
                 <a className="header__logo-link" href="#">
-                  <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+                  <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41" />
                 </a>
               </div>
               <nav className="header__nav">
@@ -136,7 +144,7 @@ const PlaceCardDetail = ({offer}) => {
                     <li className="reviews__item">
                       <div className="reviews__user user">
                         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54"
+                          <img className="reviews__avatar user__avatar" src="/img/avatar-max.jpg" width="54" height="54"
                             alt="Reviews avatar" />
                         </div>
                         <span className="reviews__user-name">
@@ -249,7 +257,7 @@ const PlaceCardDetail = ({offer}) => {
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <a href="#">
                       <img className="place-card__image"
-                        src="img/room.jpg"
+                        src="/img/room.jpg"
                         width="260" height="200" alt="Place image"/>
                     </a>
                   </div>
@@ -283,7 +291,7 @@ const PlaceCardDetail = ({offer}) => {
                 <article className="near-places__card place-card">
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <a href="#">
-                      <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200"
+                      <img className="place-card__image" src="/img/apartment-02.jpg" width="260" height="200"
                         alt="Place image"/>
                     </a>
                   </div>
@@ -316,7 +324,7 @@ const PlaceCardDetail = ({offer}) => {
                 <article className="near-places__card place-card">
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <a href="#">
-                      <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200"
+                      <img className="place-card__image" src="/img/apartment-03.jpg" width="260" height="200"
                         alt="Place image"/>
                     </a>
                   </div>
@@ -355,7 +363,7 @@ const PlaceCardDetail = ({offer}) => {
 };
 
 PlaceCardDetail.propTypes = {
-  offer: offerType
+  offers: offersTypeArray
 };
 
 export {PlaceCardDetail};

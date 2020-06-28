@@ -4,6 +4,8 @@ export const testString = `Test string`;
 
 export const emptyFunction = () => {};
 
+export const cardId = 12;
+
 export const cardDataArray = [
   {
     id: 10,
