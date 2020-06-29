@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {offersTypeArray} from '../../prop-types/prop-types';
 import {PlaceCard} from '../place-card/place-card';
 
 const PlacesList = ({offers}) => {
-  const [, setActiveOffer] = useState(null);
-
   return (
     <div className="cities__places-list places__list tabs__content">
       {
         offers.map((offer) => (
-          <PlaceCard key={offer.id} offer={offer} setActiveOffer={setActiveOffer} />
+          <PlaceCard key={offer.id}
+            offer={offer}
+          />
         ))
       }
     </div>

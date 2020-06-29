@@ -6,7 +6,6 @@ exports[`Places list should be rendered 1`] = `
 >
   <article
     className="cities__place-card place-card"
-    onMouseEnter={[Function]}
   >
     <div
       className="place-card__mark"
@@ -95,7 +94,7 @@ exports[`Places list should be rendered 1`] = `
         className="place-card__name"
       >
         <a
-          href="#"
+          href="/offers/10"
           onClick={[Function]}
         >
           Title
@@ -110,7 +109,6 @@ exports[`Places list should be rendered 1`] = `
   </article>
   <article
     className="cities__place-card place-card"
-    onMouseEnter={[Function]}
   >
     
     <div
@@ -193,7 +191,7 @@ exports[`Places list should be rendered 1`] = `
         className="place-card__name"
       >
         <a
-          href="#"
+          href="/offers/100"
           onClick={[Function]}
         >
           Title test

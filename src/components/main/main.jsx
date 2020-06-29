@@ -4,7 +4,6 @@ import {offersTypeArray} from '../../prop-types/prop-types';
 import {PlacesList} from "../places-list/places-list";
 
 const Main = ({optionsAmount, offers}) => {
-
   return (
     <React.Fragment>
       <div style={{display: `none`}}>
@@ -118,9 +117,7 @@ const Main = ({optionsAmount, offers}) => {
 
                 </form>
 
-                <PlacesList
-                  offers = {offers}
-                />
+                <PlacesList offers = {offers}/>
 
               </section>
               <div className="cities__right-section">

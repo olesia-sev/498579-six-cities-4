@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 export const offerType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   img: PropTypes.string.isRequired,
+  images: PropTypes.array,
   price: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   placeType: PropTypes.string.isRequired,

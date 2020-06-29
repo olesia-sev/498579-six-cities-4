@@ -239,7 +239,6 @@ Array [
             >
               <article
                 className="cities__place-card place-card"
-                onMouseEnter={[Function]}
               >
                 <div
                   className="place-card__mark"
@@ -328,7 +327,7 @@ Array [
                     className="place-card__name"
                   >
                     <a
-                      href="#"
+                      href="/offers/10"
                       onClick={[Function]}
                     >
                       Title
@@ -343,7 +342,6 @@ Array [
               </article>
               <article
                 className="cities__place-card place-card"
-                onMouseEnter={[Function]}
               >
                 
                 <div
@@ -426,7 +424,7 @@ Array [
                     className="place-card__name"
                   >
                     <a
-                      href="#"
+                      href="/offers/100"
                       onClick={[Function]}
                     >
                       Title test
