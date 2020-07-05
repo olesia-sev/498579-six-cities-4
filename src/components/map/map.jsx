@@ -2,20 +2,22 @@ import React, {useEffect} from "react";
 import leaflet from 'leaflet';
 import {offersTypeArray} from "../../prop-types/prop-types";
 
-const renderMap = (coords) => {
-  const city = [52.38333, 4.9];
-  const icon = leaflet.icon({
+const mapConfig = {
+  center: [52.38333, 4.9],
+  zoom: 12,
+  zoomControl: false,
+  marker: true,
+  city: [52.38333, 4.9],
+  mapIcon: {
     iconUrl: `/img/pin.svg`,
     iconSize: [30, 30]
-  });
-  const zoom = 12;
-  const map = leaflet.map(`map`, {
-    center: city,
-    zoom,
-    zoomControl: false,
-    marker: true
-  });
-  map.setView(city, zoom);
+  }
+};
+
+const renderMap = (coords) => {
+  const icon = leaflet.icon(mapConfig.mapIcon);
+  const map = leaflet.map(`map`, mapConfig);
+  map.setView(mapConfig.city, mapConfig.zoom);
 
   leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
@@ -38,10 +40,10 @@ const Map = ({offers}) => {
       coords.push(offer.coords)
     ));
     renderMap(coords);
-  });
+  }, [offers]);
 
   return (
-    <div id="map" style={{width: `100%`, height: `100%`}} />
+    <div id="map" />
   );
 
 };

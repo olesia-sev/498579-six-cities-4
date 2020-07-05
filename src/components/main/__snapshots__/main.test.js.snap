@@ -447,12 +447,6 @@ Array [
             >
               <div
                 id="map"
-                style={
-                  Object {
-                    "height": "100%",
-                    "width": "100%",
-                  }
-                }
               />
             </section>
           </div>
