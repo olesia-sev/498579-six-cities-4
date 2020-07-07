@@ -28,6 +28,24 @@ export default [
     hostAvatar: `/img/avatar-angelina.jpg`,
     userPro: true,
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
+    reviews: [
+      {
+        id: 12,
+        userName: `Max`,
+        userAvatar: `/img/avatar-max.jpg`,
+        rating: 4,
+        content: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+        date: `April 2019`
+      },
+      {
+        id: 13,
+        userName: `Tom`,
+        userAvatar: `/img/avatar.svg`,
+        rating: 5,
+        content: `A cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+        date: `May 2019`
+      },
+    ],
   },
   {
     id: 2,
@@ -56,6 +74,16 @@ export default [
     hostAvatar: `/img/avatar-angelina.jpg`,
     userPro: false,
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
+    reviews: [
+      {
+        id: 15,
+        userName: `Max`,
+        userAvatar: `/img/avatar-max.jpg`,
+        rating: 4,
+        content: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+        date: `April 2019`
+      },
+    ],
   },
   {
     id: 3,
@@ -84,6 +112,24 @@ export default [
     hostAvatar: `/img/avatar-angelina.jpg`,
     userPro: true,
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
+    reviews: [
+      {
+        id: 22,
+        userName: `Max`,
+        userAvatar: `/img/avatar-max.jpg`,
+        rating: 4,
+        content: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+        date: `April 2019`
+      },
+      {
+        id: 23,
+        userName: `Tom`,
+        userAvatar: `/img/avatar.svg`,
+        rating: 5,
+        content: `A cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+        date: `May 2019`
+      },
+    ],
   },
   {
     id: 4,
@@ -112,5 +158,15 @@ export default [
     hostAvatar: `/img/avatar-angelina.jpg`,
     userPro: false,
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
+    reviews: [
+      {
+        id: 53,
+        userName: `Tom`,
+        userAvatar: `/img/avatar.svg`,
+        rating: 5,
+        content: `A cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+        date: `May 2019`
+      },
+    ],
   },
 ];

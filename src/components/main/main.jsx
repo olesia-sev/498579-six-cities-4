@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {offersTypeArray} from '../../prop-types/prop-types';
-import {PlacesList} from "../places-list/places-list";
+import {PlacesList, MAIN_THEME} from "../places-list/places-list";
 import {Map} from "../map/map";
 
 const Main = ({optionsAmount, offers}) => {
@@ -118,7 +118,7 @@ const Main = ({optionsAmount, offers}) => {
 
                 </form>
 
-                <PlacesList offers = {offers}/>
+                <PlacesList offers = {offers} theme={MAIN_THEME} />
 
               </section>
               <div className="cities__right-section">

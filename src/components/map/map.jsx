@@ -27,19 +27,26 @@ const renderMap = (coords) => {
 
   for (let i = 0; i < coords.length; i++) {
     leaflet
-      .marker(coords[i], {icon})
+      .marker(coords[i], {icon, title: `marker-default`})
       .addTo(map);
   }
+  return map;
 };
 
 const Map = ({offers}) => {
 
   useEffect(() => {
+
     const coords = [];
     offers.map((offer) => (
       coords.push(offer.coords)
     ));
-    renderMap(coords);
+
+    const map = renderMap(coords);
+
+    return () => {
+      map.remove();
+    };
   }, [offers]);
 
   return (
