@@ -3,6 +3,7 @@ import {getRandomNumberInRange} from '../utils/functions';
 export default [
   {
     id: 1,
+    coords: [52.3909553943508, 4.85309666406198],
     img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     images: [
       `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
@@ -30,6 +31,7 @@ export default [
   },
   {
     id: 2,
+    coords: [52.369553943508, 4.85309666406198],
     img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     images: [
       `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
@@ -57,6 +59,7 @@ export default [
   },
   {
     id: 3,
+    coords: [52.3909553943508, 4.929309666406198],
     img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     images: [
       `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
@@ -84,6 +87,7 @@ export default [
   },
   {
     id: 4,
+    coords: [52.3809553943508, 4.939309666406198],
     img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     images: [
       `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
