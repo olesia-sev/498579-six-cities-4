@@ -1,4 +1,6 @@
 import {MAIN_THEME} from "../components/places-list/places-list";
+import {PLACE_CARD_FAV_BTN} from "../components/common/favourite-button/favourite-button";
+import {PLACE_CARD_THEME} from "../components/common/ratinig/ratinig";
 
 export const optionsAmount = 100;
 
@@ -9,6 +11,8 @@ export const emptyFunction = () => {};
 export const cardId = 12;
 
 export const theme = MAIN_THEME;
+export const favButtonTheme = PLACE_CARD_FAV_BTN;
+export const ratingTheme = PLACE_CARD_THEME;
 
 export const cardDataArray = [
   {

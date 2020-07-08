@@ -1,9 +1,9 @@
 import React from 'react';
 import {reviewType} from '../../prop-types/prop-types';
+import {Rating, REVIEWS_THEME} from "../common/ratinig/ratinig";
 
 const Review = ({review}) => {
   const {id, userName, userAvatar, rating, content, date} = review;
-
   return (
     <li key={id} className="reviews__item">
       <div className="reviews__user user">
@@ -14,12 +14,9 @@ const Review = ({review}) => {
         <span className="reviews__user-name">{userName}</span>
       </div>
       <div className="reviews__info">
-        <div className="reviews__rating rating">
-          <div className="reviews__stars rating__stars">
-            <span style={{width: `${rating * 20}%`}} />
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+
+        <Rating rating={rating} theme={REVIEWS_THEME} />
+
         <p className="reviews__text">
           {content}
         </p>

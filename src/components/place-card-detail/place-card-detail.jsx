@@ -4,6 +4,8 @@ import {offersTypeArray} from '../../prop-types/prop-types';
 import {ReviewsList} from '../reviews-list/reviews-list';
 import {Map} from "../map/map";
 import {PlacesList, NEARBY_THEME} from "../places-list/places-list";
+import {PROPERTY_THEME, Rating} from "../common/ratinig/ratinig";
+import {FavouriteButton, PROPERTY_FAV_BTN} from "../common/favourite-button/favourite-button";
 
 const PlaceCardDetail = ({offers}) => {
   let {id} = useParams();
@@ -76,23 +78,13 @@ const PlaceCardDetail = ({offers}) => {
                   </div> : ``}
                 <div className="property__name-wrapper">
                   <h1 className="property__name">{title}</h1>
-                  <button
-                    className={`property__bookmark-button button ${saved ? `property__bookmark-button--active` : ``}`}
-                    type="button"
-                  >
-                    <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
-                      <use xlinkHref="#icon-bookmark" />
-                    </svg>
-                    <span className="visually-hidden">To bookmarks</span>
-                  </button>
+
+                  <FavouriteButton saved={saved} theme={PROPERTY_FAV_BTN} />
+
                 </div>
-                <div className="property__rating rating">
-                  <div className="property__stars rating__stars">
-                    <span style={{width: `${rating * 20}%`}} />
-                    <span className="visually-hidden">Rating</span>
-                  </div>
-                  <span className="property__rating-value rating__value">{rating}</span>
-                </div>
+
+                <Rating rating={rating} theme={PROPERTY_THEME} />
+
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
                     {placeType}

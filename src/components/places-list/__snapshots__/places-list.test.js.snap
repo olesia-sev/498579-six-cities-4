@@ -147,7 +147,7 @@ exports[`Places list should be rendered 1`] = `
           </span>
         </div>
         <button
-          className="place-card__bookmark-button button false"
+          className="place-card__bookmark-button button "
           type="button"
         >
           <svg
