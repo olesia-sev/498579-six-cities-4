@@ -1,6 +1,6 @@
 import React from "react";
-import {Rating} from "./ratinig";
 import renderer from "react-test-renderer";
+import {Rating} from "./ratinig";
 import {ratingTheme, cardDataArray} from "../../../utils/test.utils";
 
 it(`Rating should be rendered`, () => {

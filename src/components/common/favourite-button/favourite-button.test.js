@@ -1,6 +1,6 @@
 import React from "react";
-import {FavouriteButton} from "./favourite-button";
 import renderer from "react-test-renderer";
+import {FavouriteButton} from "./favourite-button";
 import {favButtonTheme} from "../../../utils/test.utils";
 
 it(`FavouriteButton should be rendered`, () => {
