@@ -1,15 +1,15 @@
 import React from "react";
-import {PlaceCardDetail} from "./place-card-detail";
 import renderer from "react-test-renderer";
-import {cardDataArray} from "../../utils/test.utils";
 import {MemoryRouter, Route} from "react-router-dom";
+import {Property} from "./property";
+import {cardDataArray} from "../../utils/test.utils";
 
-it(`PlaceCardDetail should be rendered`, () => {
+it(`Property should be rendered`, () => {
   const tree = renderer
     .create(
-        <MemoryRouter initialEntries={[`/offers/1`]}>
+        <MemoryRouter initialEntries={[`/offers/10`]}>
           <Route path="/offers/:id">
-            <PlaceCardDetail offers={cardDataArray} />
+            <Property offers={cardDataArray} />
           </Route>
         </MemoryRouter>
     )

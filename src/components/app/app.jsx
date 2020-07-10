@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {offersTypeArray} from '../../prop-types/prop-types';
 import {Main} from '../main/main';
-import {PlaceCardDetail} from "../place-card-detail/place-card-detail";
+import {Property} from "../property/property";
 
 const App = ({optionsAmount, offers}) => {
   return (
@@ -13,11 +13,11 @@ const App = ({optionsAmount, offers}) => {
           <Main
             optionsAmount = {optionsAmount}
             offers = {offers}
-          />;
+          />
         </Route>
 
         <Route path="/offers/:id">
-          <PlaceCardDetail offers={offers} />
+          <Property offers={offers} />
         </Route>
 
       </Switch>

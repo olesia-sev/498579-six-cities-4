@@ -1,3 +1,7 @@
+import {MAIN_THEME} from "../components/places-list/places-list";
+import {PLACE_CARD_FAV_BTN} from "../components/common/favourite-button/favourite-button";
+import {PLACE_CARD_THEME} from "../components/common/ratinig/ratinig";
+
 export const optionsAmount = 100;
 
 export const testString = `Test string`;
@@ -6,9 +10,14 @@ export const emptyFunction = () => {};
 
 export const cardId = 12;
 
+export const theme = MAIN_THEME;
+export const favButtonTheme = PLACE_CARD_FAV_BTN;
+export const ratingTheme = PLACE_CARD_THEME;
+
 export const cardDataArray = [
   {
     id: 10,
+    coords: [52.3909553943508, 4.85309666406198],
     img: `https://placedog.net/260/200?id=2`,
     images: [
       `https://placedog.net/260/200?id=3`,
@@ -33,9 +42,20 @@ export const cardDataArray = [
     hostAvatar: `https://placedog.net/260/200?id=5`,
     userPro: true,
     description: `Description`,
+    reviews: [
+      {
+        id: 95,
+        userName: `Mini`,
+        userAvatar: `https://placedog.net/260/200?id=5`,
+        rating: 4,
+        content: `Review`,
+        date: `April 2019`
+      },
+    ],
   },
   {
     id: 100,
+    coords: [52.369553943508, 4.85309666406198],
     img: `https://placedog.net/260/200?id=3`,
     images: [
       `https://placedog.net/260/200?id=33`,
@@ -60,5 +80,23 @@ export const cardDataArray = [
     hostAvatar: `https://placedog.net/260/200?id=57`,
     userPro: false,
     description: `Description`,
+    reviews: [
+      {
+        id: 92,
+        userName: `Max`,
+        userAvatar: `/img/avatar-max.jpg`,
+        rating: 4,
+        content: `Review`,
+        date: `April 2019`
+      },
+      {
+        id: 93,
+        userName: `Tom`,
+        userAvatar: `/img/avatar.svg`,
+        rating: 5,
+        content: `Review`,
+        date: `May 2019`
+      },
+    ],
   }
 ];
