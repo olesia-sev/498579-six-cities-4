@@ -17,6 +17,8 @@ export const ratingTheme = PLACE_CARD_THEME;
 export const cardDataArray = [
   {
     id: 10,
+    cityId: 100,
+    city: `Paris`,
     coords: [52.3909553943508, 4.85309666406198],
     img: `https://placedog.net/260/200?id=2`,
     images: [
@@ -55,6 +57,8 @@ export const cardDataArray = [
   },
   {
     id: 100,
+    cityId: 200,
+    city: `Cologne`,
     coords: [52.369553943508, 4.85309666406198],
     img: `https://placedog.net/260/200?id=3`,
     images: [
@@ -98,5 +102,32 @@ export const cardDataArray = [
         date: `May 2019`
       },
     ],
+  }
+];
+
+export const citiesArray = [
+  {
+    name: `Paris`,
+    id: 100,
+  },
+  {
+    name: `Cologne`,
+    id: 200,
+  },
+  {
+    name: `Brussels`,
+    id: 300,
+  },
+  {
+    name: `Amsterdam`,
+    id: 400,
+  },
+  {
+    name: `Hamburg`,
+    id: 500,
+  },
+  {
+    name: `Dusseldorf`,
+    id: 600,
   }
 ];

@@ -1,13 +1,14 @@
 import React from "react";
-import {useParams} from "react-router-dom";
-import {offersTypeArray, reviewTypeArray} from '../../prop-types/prop-types';
+import {withRouter} from "react-router-dom";
+import {offerType, reviewTypeArray} from '../../prop-types/prop-types';
 import {Header} from '../common/header/header';
 import {ReviewsList} from '../reviews-list/reviews-list';
-import {Map} from "../map/map";
-import {PlacesList, NEARBY_THEME} from "../places-list/places-list";
+import Map from "../map/map";
+import PlacesList, {NEARBY_THEME} from "../places-list/places-list";
 import {PROPERTY_THEME, Rating} from "../common/ratinig/ratinig";
 import {FavouriteButton, PROPERTY_FAV_BTN} from "../common/favourite-button/favourite-button";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 
 const PropertyGallery = ({images, title}) => {
   return (
@@ -202,19 +203,16 @@ const PropertyReview = ({reviews}) => {
   );
 };
 
-const PropertyMap = ({offers}) => {
+const PropertyMap = () => {
   return (
     <section className="property__map map">
-      <Map offers={offers} />
+      <Map />
     </section>
   );
 };
 
 
-const Property = ({offers}) => {
-  let {id} = useParams();
-  const currentOffer = offers.find((obj) => obj.id === +id);
-
+const Property = ({currentOffer}) => {
   if (!currentOffer) {
     return null;
   }
@@ -270,14 +268,14 @@ const Property = ({offers}) => {
               </div>
             </div>
 
-            <PropertyMap offers={offers.filter((offer) => offer.id !== +id)} />
+            <PropertyMap />
 
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
 
-              <PlacesList offers={offers.filter((offer) => offer.id !== +id)} theme={NEARBY_THEME} />
+              <PlacesList theme={NEARBY_THEME} />
 
             </section>
           </div>
@@ -323,12 +321,16 @@ PropertyReview.propTypes = {
   reviews: reviewTypeArray,
 };
 
-PropertyMap.propTypes = {
-  offers: offersTypeArray,
-};
-
 Property.propTypes = {
-  offers: offersTypeArray,
+  currentOffer: offerType,
 };
 
-export {Property};
+const mapStateToProps = (state, ownProps) => {
+  const currentCityOffers = state.offers.find((offer) => offer.id === +ownProps.match.params.id);
+
+  return {
+    currentOffer: currentCityOffers,
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(Property));

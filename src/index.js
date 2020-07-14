@@ -1,16 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import {App} from "./components/app/app.jsx";
-import offers from './mocks/offers';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {createStore} from 'redux';
+import {reducer} from './reducer';
+import {Provider} from 'react-redux';
+import {App} from './components/app/app.jsx';
+
+const store = createStore(reducer);
 
 const init = () => {
-  const settings = {
-    optionsAmount: 500,
-    offers,
-  };
-
   ReactDOM.render(
-      <App {...settings}/>,
+      <Provider store={store}>
+        <App />,
+      </Provider>,
       document.querySelector(`#root`)
   );
 };
