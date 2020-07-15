@@ -2,6 +2,7 @@ import React from 'react';
 import {offersTypeArray} from '../../prop-types/prop-types';
 import {PlaceCard} from "../place-card/place-card";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 
 export const MAIN_THEME = `main`;
 export const NEARBY_THEME = `nearby`;
@@ -15,7 +16,9 @@ const themes = {
 };
 
 const PlacesList = ({theme, offers}) => {
+
   const currentTheme = themes[theme];
+
   return (
     <div className={currentTheme.placesList}>
       {
@@ -32,6 +35,11 @@ PlacesList.propTypes = {
   offers: offersTypeArray,
 };
 
-const MemoizedPlacesList = React.memo(PlacesList);
+const mapStateToProps = (state) => {
+  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
+  return {
+    offers: currentCityOffers,
+  };
+};
 
-export {MemoizedPlacesList as PlacesList};
+export default connect(mapStateToProps)(PlacesList);

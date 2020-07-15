@@ -2,49 +2,11 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {offersTypeArray} from '../../prop-types/prop-types';
 import {Header} from '../common/header/header';
-import {PlacesList, MAIN_THEME} from "../places-list/places-list";
-import {Map} from "../map/map";
-
-const MainTabs = () => {
-  return (
-    <div className="tabs">
-      <section className="locations container">
-        <ul className="locations__list tabs__list">
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Paris</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Cologne</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Brussels</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item tabs__item--active">
-              <span>Amsterdam</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Hamburg</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Dusseldorf</span>
-            </a>
-          </li>
-        </ul>
-      </section>
-    </div>
-  );
-};
+import {MainEmpty} from '../main-empty/main-empty';
+import CitiesList from '../cities-list/cities-list';
+import PlacesList, {MAIN_THEME} from "../places-list/places-list";
+import Map from "../map/map";
+import {connect} from "react-redux";
 
 const MainSort = () => {
   return (
@@ -60,37 +22,56 @@ const MainSort = () => {
   );
 };
 
-const Main = ({optionsAmount, offers}) => {
+const MainContent = ({offers, currentCity}) => {
+  const getTitle = () => {
+    switch (true) {
+      case offers.length > 1:
+        return `${offers.length} places to stay in ${currentCity.name}`;
+      case offers.length === 1:
+        return `${offers.length} place to stay in ${currentCity.name}`;
+      default: {
+        return `No places to stay available`;
+      }
+    }
+  };
+
+  return (
+    <div className="cities__places-container container">
+      <section className="cities__places places">
+        <h2 className="visually-hidden">Places</h2>
+        <b className="places__found">{getTitle()}</b>
+        <MainSort />
+        <PlacesList theme={MAIN_THEME} />
+      </section>
+      <div className="cities__right-section">
+        <section className="cities__map map">
+          <Map />
+        </section>
+      </div>
+    </div>
+  );
+};
+
+const Main = ({offers, currentCity}) => {
+
   return (
     <React.Fragment>
       <div className="page page--gray page--main">
 
         <Header />
 
-        <main className="page__main page__main--index">
+        <main className={`page__main page__main--index ${offers.length === 0 ? `page__main--index-empty` : ``}`}>
+
           <h1 className="visually-hidden">Cities</h1>
 
-          <MainTabs />
+          <CitiesList />
 
           <div className="cities">
-            <div className="cities__places-container container">
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{optionsAmount} places to stay in Amsterdam</b>
-
-                <MainSort />
-
-                <PlacesList offers = {offers} theme={MAIN_THEME} />
-
-              </section>
-
-              <div className="cities__right-section">
-                <section className="cities__map map">
-                  <Map offers = {offers}/>
-                </section>
-              </div>
-
-            </div>
+            {
+              offers.length === 0 ?
+                <MainEmpty /> :
+                <MainContent offers={offers} currentCity={currentCity} />
+            }
           </div>
         </main>
       </div>
@@ -99,8 +80,29 @@ const Main = ({optionsAmount, offers}) => {
 };
 
 Main.propTypes = {
-  optionsAmount: PropTypes.number.isRequired,
   offers: offersTypeArray,
+  currentCity: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  })
 };
 
-export {Main};
+MainContent.propTypes = {
+  offers: offersTypeArray,
+  currentCity: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  })
+};
+
+const mapStateToProps = (state) => {
+  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
+  const currentCity = state.cities.find((city) => city.id === state.activeCityId);
+
+  return {
+    offers: currentCityOffers,
+    currentCity,
+  };
+};
+
+export default connect(mapStateToProps)(Main);

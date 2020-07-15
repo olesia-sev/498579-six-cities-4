@@ -1,16 +1,25 @@
 import React from "react";
-import {Main} from "./main";
+import Main from "./main";
 import renderer from "react-test-renderer";
-import {optionsAmount, cardDataArray} from "../../utils/test.utils";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
+import {cardDataArray, citiesArray} from "../../utils/test.utils";
 import {BrowserRouter as Router} from "react-router-dom";
 
+const mockStore = configureStore([]);
+
 it(`Main should be rendered`, () => {
+  const store = mockStore({
+    activeCityId: 10,
+    cities: citiesArray,
+    offers: cardDataArray,
+  });
+
   const tree = renderer
     .create(<Router>
-      <Main
-        optionsAmount = {optionsAmount}
-        offers = {cardDataArray}
-      />
+      <Provider store={store}>
+        <Main />
+      </Provider>
     </Router>)
     .toJSON();
 

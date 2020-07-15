@@ -1,13 +1,13 @@
 import React from "react";
-import {App} from "./app";
+import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import renderer from "react-test-renderer";
-import {citiesArray, cardDataArray} from "../../utils/test.utils";
+import CitiesList from "./cities-list";
+import {cardDataArray, citiesArray} from "../../utils/test.utils";
 
 const mockStore = configureStore([]);
 
-it(`App should be rendered`, () => {
+it(`CitiesList should be rendered`, () => {
   const store = mockStore({
     activeCityId: 10,
     cities: citiesArray,
@@ -17,7 +17,7 @@ it(`App should be rendered`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <App />
+          <CitiesList />)
         </Provider>
     )
     .toJSON();

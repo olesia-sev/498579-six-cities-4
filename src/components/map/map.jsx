@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import leaflet from 'leaflet';
 import {offersTypeArray} from "../../prop-types/prop-types";
+import {connect} from "react-redux";
 
 const mapConfig = {
   center: [52.38333, 4.9],
@@ -59,4 +60,11 @@ Map.propTypes = {
   offers: offersTypeArray,
 };
 
-export {Map};
+const mapStateToProps = (state) => {
+  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
+  return {
+    offers: currentCityOffers,
+  };
+};
+
+export default connect(mapStateToProps)(Map);

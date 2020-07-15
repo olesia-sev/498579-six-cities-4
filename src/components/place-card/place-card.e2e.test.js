@@ -3,7 +3,7 @@ import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import {PlaceCard} from "./place-card";
 import {cardDataArray, theme} from "../../utils/test.utils";
-import {Property} from "../property/property";
+import Property from "../property/property";
 import {BrowserRouter as Router} from "react-router-dom";
 
 Enzyme.configure({

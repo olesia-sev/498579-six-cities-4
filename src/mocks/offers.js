@@ -3,6 +3,8 @@ import {getRandomNumberInRange} from '../utils/functions';
 export default [
   {
     id: 1,
+    cityId: 10,
+    city: `Paris`,
     coords: [52.3909553943508, 4.85309666406198],
     img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     images: [
@@ -49,6 +51,8 @@ export default [
   },
   {
     id: 2,
+    cityId: 20,
+    city: `Cologne`,
     coords: [52.369553943508, 4.85309666406198],
     img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     images: [
@@ -87,6 +91,8 @@ export default [
   },
   {
     id: 3,
+    cityId: 30,
+    city: `Brussels`,
     coords: [52.3909553943508, 4.929309666406198],
     img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     images: [
@@ -133,6 +139,8 @@ export default [
   },
   {
     id: 4,
+    cityId: 10,
+    city: `Paris`,
     coords: [52.3809553943508, 4.939309666406198],
     img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     images: [
