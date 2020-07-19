@@ -1,8 +1,9 @@
 import React from 'react';
 import {offersTypeArray} from '../../prop-types/prop-types';
-import {PlaceCard} from "../place-card/place-card";
+import PlaceCard from "../place-card/place-card";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {getSortedOffers} from "../../utils/functions";
 
 export const MAIN_THEME = `main`;
 export const NEARBY_THEME = `nearby`;
@@ -23,7 +24,7 @@ const PlacesList = ({theme, offers}) => {
     <div className={currentTheme.placesList}>
       {
         offers.map((offer) => (
-          <PlaceCard key={offer.id} theme={theme} offer={offer} />
+          <PlaceCard key={offer.id} theme={theme} offer={offer}/>
         ))
       }
     </div>
@@ -36,7 +37,7 @@ PlacesList.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
+  const currentCityOffers = getSortedOffers(state.offers.filter((offer) => offer.cityId === state.activeCityId), state.activeSortingType);
   return {
     offers: currentCityOffers,
   };

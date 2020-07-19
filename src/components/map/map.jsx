@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import leaflet from 'leaflet';
-import {offersTypeArray} from "../../prop-types/prop-types";
-import {connect} from "react-redux";
+import {shallowEqual, useSelector} from "react-redux";
 
 const mapConfig = {
   center: [52.38333, 4.9],
@@ -12,11 +11,16 @@ const mapConfig = {
   mapIcon: {
     iconUrl: `/img/pin.svg`,
     iconSize: [30, 30]
+  },
+  mapActiveIcon: {
+    iconUrl: `/img/pin-active.svg`,
+    iconSize: [30, 30]
   }
 };
 
-const renderMap = (coords) => {
+const renderMap = (coords, activeCard) => {
   const icon = leaflet.icon(mapConfig.mapIcon);
+  const iconActive = leaflet.icon(mapConfig.mapActiveIcon);
   const map = leaflet.map(`map`, mapConfig);
   map.setView(mapConfig.city, mapConfig.zoom);
 
@@ -27,14 +31,28 @@ const renderMap = (coords) => {
     .addTo(map);
 
   for (let i = 0; i < coords.length; i++) {
-    leaflet
-      .marker(coords[i], {icon, title: `marker-default`})
-      .addTo(map);
+    if (activeCard && coords[i] === activeCard.coords) {
+      leaflet
+        .marker(coords[i], {icon: iconActive})
+        .addTo(map);
+    } else {
+      leaflet
+        .marker(coords[i], {icon})
+        .addTo(map);
+    }
   }
   return map;
 };
 
-const Map = ({offers}) => {
+const Map = React.memo(function Map() {
+
+  const offers = useSelector((state) => {
+    return state.offers.filter((offer) => offer.cityId === state.activeCityId);
+  }, shallowEqual);
+
+  const hoveredOffer = useSelector((state) => {
+    return state.hoveredOffer;
+  }, shallowEqual);
 
   useEffect(() => {
 
@@ -43,7 +61,7 @@ const Map = ({offers}) => {
       coords.push(offer.coords)
     ));
 
-    const map = renderMap(coords);
+    const map = renderMap(coords, hoveredOffer);
 
     return () => {
       map.remove();
@@ -54,17 +72,6 @@ const Map = ({offers}) => {
     <div id="map" />
   );
 
-};
+});
 
-Map.propTypes = {
-  offers: offersTypeArray,
-};
-
-const mapStateToProps = (state) => {
-  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
-  return {
-    offers: currentCityOffers,
-  };
-};
-
-export default connect(mapStateToProps)(Map);
+export default Map;

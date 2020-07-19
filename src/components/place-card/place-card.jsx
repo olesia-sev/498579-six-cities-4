@@ -1,5 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {ActionCreator} from "../../reducer";
 import PropTypes from 'prop-types';
 import {offerType} from "../../prop-types/prop-types";
 import {PLACE_CARD_THEME, Rating} from "../common/ratinig/ratinig";
@@ -51,12 +53,14 @@ const PlaceCardInfo = ({price, saved, rating, id, title, placeType}) => {
   );
 };
 
-const PlaceCard = ({theme, offer}) => {
+const PlaceCard = ({theme, offer, setHoveredOffer}) => {
   const currentTheme = themes[theme];
 
   return (
     <article
       className={currentTheme.article}
+      onMouseEnter={setHoveredOffer(offer)}
+      onMouseLeave={setHoveredOffer(null)}
     >
       {
         offer.premium &&
@@ -80,7 +84,8 @@ const PlaceCard = ({theme, offer}) => {
 
 PlaceCard.propTypes = {
   theme: PropTypes.oneOf([MAIN_THEME, NEARBY_THEME]).isRequired,
-  offer: offerType
+  offer: offerType,
+  setHoveredOffer: PropTypes.func.isRequired,
 };
 
 PlaceCardInfo.propTypes = {
@@ -92,6 +97,16 @@ PlaceCardInfo.propTypes = {
   placeType: PropTypes.string.isRequired,
 };
 
-const MemoizedPlaceCard = React.memo(PlaceCard);
 
-export {MemoizedPlaceCard as PlaceCard};
+const mapStateToProps = (state) => {
+  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
+  return {
+    offers: currentCityOffers,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setHoveredOffer: (offer) => () => dispatch(ActionCreator.getHoveredOffer(offer)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceCard);

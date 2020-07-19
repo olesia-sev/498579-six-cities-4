@@ -91,8 +91,8 @@ export default [
   },
   {
     id: 3,
-    cityId: 30,
-    city: `Brussels`,
+    cityId: 10,
+    city: `Paris`,
     coords: [52.3909553943508, 4.929309666406198],
     img: `https://placedog.net/260/200?id=${getRandomNumberInRange(1, 100)}`,
     images: [
