@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import leaflet from 'leaflet';
-import {shallowEqual, useSelector} from "react-redux";
+import {connect} from "react-redux";
+import {offersTypeArray, offerType} from "../../prop-types/prop-types";
 
 const mapConfig = {
   center: [52.38333, 4.9],
@@ -31,29 +32,14 @@ const renderMap = (coords, activeCard) => {
     .addTo(map);
 
   for (let i = 0; i < coords.length; i++) {
-    if (activeCard && coords[i] === activeCard.coords) {
-      leaflet
-        .marker(coords[i], {icon: iconActive})
-        .addTo(map);
-    } else {
-      leaflet
-        .marker(coords[i], {icon})
-        .addTo(map);
-    }
+    const isActive = activeCard && coords[i] === activeCard.coords;
+    leaflet.marker(coords[i], {icon: isActive ? iconActive : icon})
+      .addTo(map);
   }
   return map;
 };
 
-const Map = React.memo(function Map() {
-
-  const offers = useSelector((state) => {
-    return state.offers.filter((offer) => offer.cityId === state.activeCityId);
-  }, shallowEqual);
-
-  const hoveredOffer = useSelector((state) => {
-    return state.hoveredOffer;
-  }, shallowEqual);
-
+const Map = ({offers, hoveredOffer}) => {
   useEffect(() => {
 
     const coords = [];
@@ -71,7 +57,19 @@ const Map = React.memo(function Map() {
   return (
     <div id="map" />
   );
+};
 
-});
+Map.propTypes = {
+  offers: offersTypeArray,
+  hoveredOffer: offerType,
+};
 
-export default Map;
+const mapStateToProps = (state) => {
+  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
+  return {
+    offers: currentCityOffers,
+    hoveredOffer: state.hoveredOffer,
+  };
+};
+
+export default connect(mapStateToProps)(Map);
