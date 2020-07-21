@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import leaflet from 'leaflet';
 import {connect} from "react-redux";
 import {offersTypeArray, offerType} from "../../prop-types/prop-types";
@@ -19,10 +19,12 @@ const mapConfig = {
   }
 };
 
-const renderMap = (coords, activeCard) => {
-  const icon = leaflet.icon(mapConfig.mapIcon);
-  const iconActive = leaflet.icon(mapConfig.mapActiveIcon);
+const icon = leaflet.icon(mapConfig.mapIcon);
+const iconActive = leaflet.icon(mapConfig.mapActiveIcon);
+
+const renderMap = () => {
   const map = leaflet.map(`map`, mapConfig);
+
   map.setView(mapConfig.city, mapConfig.zoom);
 
   leaflet
@@ -31,28 +33,38 @@ const renderMap = (coords, activeCard) => {
     })
     .addTo(map);
 
-  for (let i = 0; i < coords.length; i++) {
-    const isActive = activeCard && coords[i] === activeCard.coords;
-    leaflet.marker(coords[i], {icon: isActive ? iconActive : icon})
-      .addTo(map);
-  }
   return map;
 };
 
 const Map = ({offers, hoveredOffer}) => {
+  const mapRef = useRef(null);
+
   useEffect(() => {
+    mapRef.current = renderMap();
+    return () => {
+      mapRef.current.remove();
+    };
+  }, []);
 
-    const coords = [];
-    offers.map((offer) => (
-      coords.push(offer.coords)
-    ));
+  useEffect(() => {
+    const coords = offers.map((offer) => offer.coords);
 
-    const map = renderMap(coords, hoveredOffer);
+    const placemarks = [];
+
+    for (let i = 0; i < coords.length; i++) {
+      const isActive = hoveredOffer && coords[i] === hoveredOffer.coords;
+      const placemark = leaflet.marker(coords[i], {icon: isActive ? iconActive : icon})
+        .addTo(mapRef.current);
+
+      placemarks.push(placemark);
+    }
 
     return () => {
-      map.remove();
+      placemarks.forEach((placemark) => {
+        mapRef.current.removeLayer(placemark);
+      });
     };
-  }, [offers]);
+  }, [offers.map((offer) => offer.id).join(`,`), hoveredOffer]);
 
   return (
     <div id="map" />
