@@ -1,4 +1,5 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useMemo, useRef} from "react";
+import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import {connect} from "react-redux";
 import {offersTypeArray, offerType} from "../../prop-types/prop-types";
@@ -36,8 +37,13 @@ const renderMap = () => {
   return map;
 };
 
-const Map = ({offers, hoveredOffer}) => {
+const Map = React.memo(function Map({offers, hoveredOffer, activeCityId}) {
   const mapRef = useRef(null);
+
+  const currentCityOffers = useMemo(() => offers.filter(
+      (offer) => offer.cityId === activeCityId),
+  [activeCityId, offers]
+  );
 
   useEffect(() => {
     mapRef.current = renderMap();
@@ -47,7 +53,7 @@ const Map = ({offers, hoveredOffer}) => {
   }, []);
 
   useEffect(() => {
-    const coords = offers.map((offer) => offer.coords);
+    const coords = currentCityOffers.map((offer) => offer.coords);
 
     const placemarks = [];
 
@@ -64,24 +70,21 @@ const Map = ({offers, hoveredOffer}) => {
         mapRef.current.removeLayer(placemark);
       });
     };
-  }, [offers.map((offer) => offer.id).join(`,`), hoveredOffer]);
+  }, [currentCityOffers, hoveredOffer]);
 
   return (
     <div id="map" />
   );
-};
+});
 
 Map.propTypes = {
   offers: offersTypeArray,
   hoveredOffer: offerType,
+  activeCityId: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
-  return {
-    offers: currentCityOffers,
-    hoveredOffer: state.hoveredOffer,
-  };
+const mapStateToProps = ({hoveredOffer, offers, activeCityId}) => {
+  return {hoveredOffer, offers, activeCityId};
 };
 
 export default connect(mapStateToProps)(Map);
