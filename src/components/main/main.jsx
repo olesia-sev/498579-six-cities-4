@@ -7,20 +7,7 @@ import CitiesList from '../cities-list/cities-list';
 import PlacesList, {MAIN_THEME} from "../places-list/places-list";
 import Map from "../map/map";
 import {connect} from "react-redux";
-
-const MainSort = () => {
-  return (
-    <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex="0">
-                  Popular
-        <svg className="places__sorting-arrow" width="7" height="4">
-          <use xlinkHref="#icon-arrow-select" />
-        </svg>
-      </span>
-    </form>
-  );
-};
+import Sorting from "../sorting/sorting";
 
 const MainContent = ({offers, currentCity}) => {
   const getTitle = () => {
@@ -40,7 +27,9 @@ const MainContent = ({offers, currentCity}) => {
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{getTitle()}</b>
-        <MainSort />
+
+        <Sorting />
+
         <PlacesList theme={MAIN_THEME} />
       </section>
       <div className="cities__right-section">

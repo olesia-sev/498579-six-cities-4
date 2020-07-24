@@ -1,7 +1,8 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo, useRef} from "react";
+import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
-import {offersTypeArray} from "../../prop-types/prop-types";
 import {connect} from "react-redux";
+import {offersTypeArray, offerType} from "../../prop-types/prop-types";
 
 const mapConfig = {
   center: [52.38333, 4.9],
@@ -12,12 +13,19 @@ const mapConfig = {
   mapIcon: {
     iconUrl: `/img/pin.svg`,
     iconSize: [30, 30]
+  },
+  mapActiveIcon: {
+    iconUrl: `/img/pin-active.svg`,
+    iconSize: [30, 30]
   }
 };
 
-const renderMap = (coords) => {
-  const icon = leaflet.icon(mapConfig.mapIcon);
+const icon = leaflet.icon(mapConfig.mapIcon);
+const iconActive = leaflet.icon(mapConfig.mapActiveIcon);
+
+const renderMap = () => {
   const map = leaflet.map(`map`, mapConfig);
+
   map.setView(mapConfig.city, mapConfig.zoom);
 
   leaflet
@@ -26,45 +34,57 @@ const renderMap = (coords) => {
     })
     .addTo(map);
 
-  for (let i = 0; i < coords.length; i++) {
-    leaflet
-      .marker(coords[i], {icon, title: `marker-default`})
-      .addTo(map);
-  }
   return map;
 };
 
-const Map = ({offers}) => {
+const Map = React.memo(function Map({offers, hoveredOffer, activeCityId}) {
+  const mapRef = useRef(null);
+
+  const currentCityOffers = useMemo(() => offers.filter(
+      (offer) => offer.cityId === activeCityId),
+  [activeCityId, offers]
+  );
 
   useEffect(() => {
+    mapRef.current = renderMap();
+    return () => {
+      mapRef.current.remove();
+    };
+  }, []);
 
-    const coords = [];
-    offers.map((offer) => (
-      coords.push(offer.coords)
-    ));
+  useEffect(() => {
+    const coords = currentCityOffers.map((offer) => offer.coords);
 
-    const map = renderMap(coords);
+    const placemarks = [];
+
+    for (let i = 0; i < coords.length; i++) {
+      const isActive = hoveredOffer && coords[i] === hoveredOffer.coords;
+      const placemark = leaflet.marker(coords[i], {icon: isActive ? iconActive : icon})
+        .addTo(mapRef.current);
+
+      placemarks.push(placemark);
+    }
 
     return () => {
-      map.remove();
+      placemarks.forEach((placemark) => {
+        mapRef.current.removeLayer(placemark);
+      });
     };
-  }, [offers]);
+  }, [currentCityOffers, hoveredOffer]);
 
   return (
     <div id="map" />
   );
-
-};
+});
 
 Map.propTypes = {
   offers: offersTypeArray,
+  hoveredOffer: offerType,
+  activeCityId: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
-  return {
-    offers: currentCityOffers,
-  };
+const mapStateToProps = ({hoveredOffer, offers, activeCityId}) => {
+  return {hoveredOffer, offers, activeCityId};
 };
 
 export default connect(mapStateToProps)(Map);
