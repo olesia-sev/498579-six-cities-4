@@ -1,8 +1,8 @@
 import React from "react";
+import {connect} from "react-redux";
 import PropTypes from 'prop-types';
 import {citiesTypeArray} from "../../prop-types/prop-types";
 import {ActionCreator} from '../../reducer';
-import {connect} from "react-redux";
 
 const CityItem = React.memo(function CityItem({name, setCurrentCityAsActive, isActive}) {
   return (
