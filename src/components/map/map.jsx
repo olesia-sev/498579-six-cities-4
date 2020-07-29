@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import {connect} from "react-redux";
 import {offersTypeArray, offerType} from "../../prop-types/prop-types";
+import {getActiveCity, getFilteredOffers} from "../../reducer/data/selectors";
+import {getHoveredOffer} from "../../reducer/app/selectors";
 
 const mapConfig = {
-  center: [52.38333, 4.9],
-  zoom: 12,
   zoomControl: false,
   marker: true,
-  city: [52.38333, 4.9],
   mapIcon: {
     iconUrl: `/img/pin.svg`,
     iconSize: [30, 30]
@@ -23,10 +22,10 @@ const mapConfig = {
 const icon = leaflet.icon(mapConfig.mapIcon);
 const iconActive = leaflet.icon(mapConfig.mapActiveIcon);
 
-const renderMap = () => {
+const renderMap = (city, zoom) => {
   const map = leaflet.map(`map`, mapConfig);
 
-  map.setView(mapConfig.city, mapConfig.zoom);
+  map.setView(city, zoom);
 
   leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
@@ -37,20 +36,26 @@ const renderMap = () => {
   return map;
 };
 
-const Map = React.memo(function Map({offers, hoveredOffer, activeCityId}) {
+const Map = React.memo(function Map({offers, hoveredOffer, activeCity}) {
   const mapRef = useRef(null);
 
   const currentCityOffers = useMemo(() => offers.filter(
-      (offer) => offer.cityId === activeCityId),
-  [activeCityId, offers]
+      (offer) => offer.cityId === activeCity.id),
+  [activeCity, offers]
   );
 
   useEffect(() => {
-    mapRef.current = renderMap();
+    if (activeCity) {
+      mapRef.current = renderMap(
+          [activeCity.location.latitude, activeCity.location.longitude],
+          activeCity.location.zoom
+      );
+    }
+
     return () => {
       mapRef.current.remove();
     };
-  }, []);
+  }, [activeCity]);
 
   useEffect(() => {
     const coords = currentCityOffers.map((offer) => offer.coords);
@@ -80,11 +85,23 @@ const Map = React.memo(function Map({offers, hoveredOffer, activeCityId}) {
 Map.propTypes = {
   offers: offersTypeArray,
   hoveredOffer: offerType,
-  activeCityId: PropTypes.number.isRequired,
+  activeCity: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-const mapStateToProps = ({hoveredOffer, offers, activeCityId}) => {
-  return {hoveredOffer, offers, activeCityId};
+const mapStateToProps = (state) => {
+  return {
+    offers: getFilteredOffers(state),
+    hoveredOffer: getHoveredOffer(state),
+    activeCity: getActiveCity(state),
+  };
 };
 
 export default connect(mapStateToProps)(Map);

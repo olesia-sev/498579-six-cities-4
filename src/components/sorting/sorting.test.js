@@ -3,13 +3,16 @@ import Sorting from "./sorting";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import {NameSpace} from "../../reducer/name-space";
 
 const mockStore = configureStore([]);
 
 it(`Sorting should be rendered`, () => {
   const store = mockStore({
-    activeSortingType: `popular`,
-    isSortingListOpened: false,
+    [NameSpace.APP]: {
+      activeSortingType: `popular`,
+      isSortingListOpened: false,
+    },
   });
 
   const tree = renderer

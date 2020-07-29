@@ -7,6 +7,7 @@ import PlaceCard from "./place-card";
 import {cardDataArray, theme} from "../../utils/test.utils";
 import Property from "../property/property";
 import {BrowserRouter as Router} from "react-router-dom";
+import {NameSpace} from "../../reducer/name-space";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -17,8 +18,10 @@ const mockStore = configureStore([]);
 describe(`Place card test`, () => {
 
   const store = mockStore({
-    offers: cardDataArray,
-    activeCityId: 100,
+    [NameSpace.DATA]: {
+      activeCityId: `Amsterdam`,
+      offers: cardDataArray,
+    },
   });
 
   it(`Title's link is correct`, () => {
