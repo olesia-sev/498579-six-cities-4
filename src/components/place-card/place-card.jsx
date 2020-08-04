@@ -1,11 +1,12 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer";
+import {ActionCreator} from "../../reducer/app/app";
 import PropTypes from 'prop-types';
 import {offerType} from "../../prop-types/prop-types";
 import {PLACE_CARD_THEME, Rating} from "../common/ratinig/ratinig";
 import {PLACE_CARD_FAV_BTN, FavouriteButton} from "../common/favourite-button/favourite-button";
+import {getFilteredOffers} from "../../reducer/data/selectors";
 
 export const MAIN_THEME = `main`;
 export const NEARBY_THEME = `nearby`;
@@ -99,9 +100,8 @@ PlaceCardInfo.propTypes = {
 
 
 const mapStateToProps = (state) => {
-  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
   return {
-    offers: currentCityOffers,
+    offers: getFilteredOffers(state),
   };
 };
 

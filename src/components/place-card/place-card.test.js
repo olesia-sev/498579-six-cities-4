@@ -5,12 +5,15 @@ import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {cardDataArray, theme} from "../../utils/test.utils";
 import {BrowserRouter as Router} from "react-router-dom";
+import {NameSpace} from "../../reducer/name-space";
 
 const mockStore = configureStore([]);
 
 it(`PlaceCard should be rendered`, () => {
   const store = mockStore({
-    offers: cardDataArray,
+    [NameSpace.DATA]: {
+      offers: cardDataArray,
+    },
   });
 
   const tree = renderer

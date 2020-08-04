@@ -4,7 +4,10 @@ import Adapter from "enzyme-adapter-react-16";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import Sorting from "./sorting";
-import {ActionCreator} from "../../reducer";
+import {NameSpace} from "../../reducer/name-space";
+import {cardDataArray} from "../../utils/test.utils";
+import {SORT_TYPES} from "../../utils/functions";
+import {ActionCreator} from "../../reducer/app/app";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -14,8 +17,13 @@ const mockStore = configureStore([]);
 
 describe(`Sorting test`, () => {
   const store = mockStore({
-    activeSortingType: `popular`,
-    isSortingListOpened: false,
+    [NameSpace.DATA]: {
+      offers: cardDataArray,
+    },
+    [NameSpace.APP]: {
+      activeSortingType: SORT_TYPES.POPULAR,
+      isSortingListOpened: false,
+    },
   });
 
   it(`Sorting list should open on click correctly`, () => {

@@ -5,14 +5,17 @@ import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {cardDataArray, citiesArray} from "../../utils/test.utils";
 import {BrowserRouter as Router} from "react-router-dom";
+import {NameSpace} from "../../reducer/name-space";
 
 const mockStore = configureStore([]);
 
 it(`Main should be rendered`, () => {
   const store = mockStore({
-    activeCityId: 10,
-    cities: citiesArray,
-    offers: cardDataArray,
+    [NameSpace.DATA]: {
+      activeCityId: `Amsterdam`,
+      cities: citiesArray,
+      offers: cardDataArray,
+    },
   });
 
   const tree = renderer

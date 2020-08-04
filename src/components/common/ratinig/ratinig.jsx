@@ -25,7 +25,7 @@ const Rating = ({theme, rating}) => {
   return (
     <div className={currentTheme.rating}>
       <div className={currentTheme.ratingStars}>
-        <span style={{width: `${rating * 20}%`}} />
+        <span style={{width: `${Math.round(rating) * 20}%`}} />
         <span className="visually-hidden">Rating</span>
       </div>
     </div>

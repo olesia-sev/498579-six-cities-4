@@ -1,14 +1,15 @@
-import React from "react";
-import {withRouter} from "react-router-dom";
+import React from 'react';
+import {withRouter} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {offerType, reviewTypeArray} from '../../prop-types/prop-types';
+import {getCurrentOffer} from '../../reducer/data/selectors';
+import {PROPERTY_THEME, Rating} from '../common/ratinig/ratinig';
+import {FavouriteButton, PROPERTY_FAV_BTN} from '../common/favourite-button/favourite-button';
+import PlacesList, {NEARBY_THEME} from '../places-list/places-list';
+import Map from '../map/map';
 import {Header} from '../common/header/header';
 import {ReviewsList} from '../reviews-list/reviews-list';
-import Map from "../map/map";
-import PlacesList, {NEARBY_THEME} from "../places-list/places-list";
-import {PROPERTY_THEME, Rating} from "../common/ratinig/ratinig";
-import {FavouriteButton, PROPERTY_FAV_BTN} from "../common/favourite-button/favourite-button";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
 
 const PropertyGallery = ({images, title}) => {
   return (
@@ -84,7 +85,7 @@ const PropertyHost = ({userPro, hostAvatar, hostName, description}) => {
     <div className="property__host">
       <h2 className="property__host-title">Meet the host</h2>
       <div className="property__host-user user">
-        <div className={`property__avatar-wrapper 
+        <div className={`property__avatar-wrapper
                     ${userPro ? `property__avatar-wrapper--pro` : ``}
                      user__avatar-wrapper`
         }>
@@ -326,10 +327,8 @@ Property.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const currentCityOffers = state.offers.find((offer) => offer.id === +ownProps.match.params.id);
-
   return {
-    currentOffer: currentCityOffers,
+    currentOffer: getCurrentOffer(state, ownProps.match.params.id),
   };
 };
 

@@ -1,20 +1,6 @@
-import {reducer, ActionType, ActionCreator, initialState} from "./reducer";
-
-describe(`Reducer tests`, () => {
-  it(`Reducer without additional parameters should return initial state`, () => {
-    expect(reducer(void 0, {})).toEqual(initialState);
-  });
-
-});
+import {ActionType, ActionCreator} from './app';
 
 describe(`Action creators work correctly`, () => {
-  it(`Action creator setActiveCity returns correct action`, () => {
-    expect(ActionCreator.setActiveCity(20)).toEqual({
-      type: ActionType.SET_ACTIVE_CITY,
-      payload: 20,
-    });
-  });
-
   it(`Action creator sortOffers returns correct action`, () => {
     expect(ActionCreator.sortOffers(`Popular`)).toEqual({
       type: ActionType.SORT_OFFERS,
@@ -35,7 +21,6 @@ describe(`Action creators work correctly`, () => {
     expect(ActionCreator.getHoveredOffer({
       id: 10,
       cityId: 100,
-      city: `Paris`,
       coords: [52.3909553943508, 4.85309666406198],
       img: `https://placedog.net/260/200?id=2`,
       images: [`https://placedog.net/260/200?id=3`],
@@ -58,7 +43,6 @@ describe(`Action creators work correctly`, () => {
       payload: {
         id: 10,
         cityId: 100,
-        city: `Paris`,
         coords: [52.3909553943508, 4.85309666406198],
         img: `https://placedog.net/260/200?id=2`,
         images: [`https://placedog.net/260/200?id=3`],

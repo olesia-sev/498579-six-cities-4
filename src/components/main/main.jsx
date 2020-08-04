@@ -1,12 +1,13 @@
 import React from "react";
+import {connect} from "react-redux";
 import PropTypes from 'prop-types';
+import {getActiveCity, getFilteredOffers} from "../../reducer/data/selectors";
 import {offersTypeArray} from '../../prop-types/prop-types';
 import {Header} from '../common/header/header';
 import {MainEmpty} from '../main-empty/main-empty';
 import CitiesList from '../cities-list/cities-list';
 import PlacesList, {MAIN_THEME} from "../places-list/places-list";
 import Map from "../map/map";
-import {connect} from "react-redux";
 import Sorting from "../sorting/sorting";
 
 const MainContent = ({offers, currentCity}) => {
@@ -71,7 +72,7 @@ const Main = ({offers, currentCity}) => {
 Main.propTypes = {
   offers: offersTypeArray,
   currentCity: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })
 };
@@ -79,18 +80,15 @@ Main.propTypes = {
 MainContent.propTypes = {
   offers: offersTypeArray,
   currentCity: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })
 };
 
 const mapStateToProps = (state) => {
-  const currentCityOffers = state.offers.filter((offer) => offer.cityId === state.activeCityId);
-  const currentCity = state.cities.find((city) => city.id === state.activeCityId);
-
   return {
-    offers: currentCityOffers,
-    currentCity,
+    offers: getFilteredOffers(state),
+    currentCity: getActiveCity(state),
   };
 };
 

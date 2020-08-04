@@ -2,7 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
 import {citiesTypeArray} from "../../prop-types/prop-types";
-import {ActionCreator} from '../../reducer';
+import {ActionCreator} from '../../reducer/data/data';
+import {getActiveCityId, getCities} from "../../reducer/data/selectors";
 
 const CityItem = React.memo(function CityItem({name, setCurrentCityAsActive, isActive}) {
   return (
@@ -48,13 +49,13 @@ CityItem.propTypes = {
 CitiesList.propTypes = {
   cities: citiesTypeArray,
   setCurrentCityAsActive: PropTypes.func.isRequired,
-  activeCityId: PropTypes.number.isRequired,
+  activeCityId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    cities: state.cities,
-    activeCityId: state.activeCityId,
+    cities: getCities(state),
+    activeCityId: getActiveCityId(state),
   };
 };
 
