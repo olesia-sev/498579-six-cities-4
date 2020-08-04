@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
-import {offersTypeArray} from '../../prop-types/prop-types';
 import {getActiveCity, getFilteredOffers} from "../../reducer/data/selectors";
 import Header from '../common/header/header';
+import {offersTypeArray} from '../../prop-types/prop-types';
 import {MainEmpty} from '../main-empty/main-empty';
 import CitiesList from '../cities-list/cities-list';
 import PlacesList, {MAIN_THEME} from "../places-list/places-list";
