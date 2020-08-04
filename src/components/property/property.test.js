@@ -20,6 +20,10 @@ it(`Property should be rendered`, () => {
       cities: citiesArray,
       activeCityId: citiesArray[0].id,
     },
+    [NameSpace.USER]: {
+      authorizationStatus: `NO_AUTH`,
+      authInfo: null,
+    }
   });
 
   const tree = renderer

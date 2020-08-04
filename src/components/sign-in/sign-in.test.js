@@ -1,20 +1,14 @@
 import React from "react";
-import {App} from "./app";
+import SignIn from "./sign-in";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import renderer from "react-test-renderer";
-import {citiesArray, cardDataArray} from "../../utils/test.utils";
 import {NameSpace} from "../../reducer/name-space";
 
 const mockStore = configureStore([]);
 
-it(`App should be rendered`, () => {
+it(`SignIn should be rendered`, () => {
   const store = mockStore({
-    [NameSpace.DATA]: {
-      activeCityId: `Amsterdam`,
-      cities: citiesArray,
-      offers: cardDataArray,
-    },
     [NameSpace.USER]: {
       authorizationStatus: `NO_AUTH`,
       authInfo: null,
@@ -24,7 +18,7 @@ it(`App should be rendered`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <App />
+          <SignIn />
         </Provider>
     )
     .toJSON();
