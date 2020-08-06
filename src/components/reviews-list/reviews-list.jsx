@@ -21,6 +21,4 @@ ReviewsList.propTypes = {
   reviews: reviewTypeArray,
 };
 
-const MemoizedReviewsList = React.memo(ReviewsList);
-
-export {MemoizedReviewsList as ReviewsList};
+export {ReviewsList};

@@ -1,17 +1,20 @@
-import {extend} from "../../utils/functions";
+import {extend, MAX_REVIEWS_LENGTH} from "../../utils/functions";
 import {createOffers} from "../../adapters/offers";
 import {createCity} from "../../adapters/cities";
+import {mapReviews} from "../../adapters/reviews";
 
 export const initialState = {
   activeCityId: undefined,
   offers: [],
   cities: [],
+  reviews: [],
 };
 
 const ActionType = {
   SET_ACTIVE_CITY: `SET_ACTIVE_CITY`,
   LOAD_OFFERS: `LOAD_OFFERS`,
   SET_CITIES: `SET_CITIES`,
+  SET_REVIEWS: `SET_REVIEWS`,
 };
 
 const ActionCreator = {
@@ -26,7 +29,11 @@ const ActionCreator = {
   setCities: (cities) => ({
     type: ActionType.SET_CITIES,
     payload: cities,
-  })
+  }),
+  setReviews: (reviews) => ({
+    type: ActionType.SET_REVIEWS,
+    payload: reviews,
+  }),
 };
 
 const Operation = {
@@ -48,6 +55,25 @@ const Operation = {
         console.error(`[HOTELS ERROR]`, error.message);
       });
   },
+  loadReviews: (offerId) => (dispatch, getState, api) => {
+    return api.get(`/comments/${offerId}`)
+      .then((response) => {
+        dispatch(
+            ActionCreator.setReviews(
+                response.data
+                  .slice(Math.max(response.data.length - MAX_REVIEWS_LENGTH, 0))
+                  .map(mapReviews)
+            )
+        );
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error(`[COMMENTS ERROR]`, error.message);
+      });
+  },
+  postReview: (offerId, review) => (dispatch, getState, api) => {
+    return api.post(`/comments/${offerId}`, review);
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -63,6 +89,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_CITIES:
       return extend(state, {
         cities: action.payload,
+      });
+    case ActionType.SET_REVIEWS:
+      return extend(state, {
+        reviews: action.payload,
       });
   }
   return state;

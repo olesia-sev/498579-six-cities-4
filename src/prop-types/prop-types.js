@@ -7,7 +7,7 @@ export const reviewType = PropTypes.shape({
   rating: PropTypes.number.isRequired,
   content: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-}).isRequired;
+});
 
 export const reviewTypeArray = PropTypes.arrayOf(reviewType).isRequired;
 
@@ -30,7 +30,6 @@ export const offerType = PropTypes.shape({
   hostAvatar: PropTypes.string.isRequired,
   userPro: PropTypes.bool.isRequired,
   description: PropTypes.string.isRequired,
-  reviews: reviewTypeArray,
 });
 
 export const offersTypeArray = PropTypes.arrayOf(offerType).isRequired;

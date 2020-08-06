@@ -14,6 +14,8 @@ export const theme = MAIN_THEME;
 export const favButtonTheme = PLACE_CARD_FAV_BTN;
 export const ratingTheme = PLACE_CARD_THEME;
 
+export const authStatus = `NO_AUTH`;
+
 export const cardDataArray = [
   {
     id: 10,
@@ -157,5 +159,24 @@ export const citiesArray = [
       longitude: 1,
       zoom: 1,
     }
+  }
+];
+
+export const reviews = [
+  {
+    id: 11,
+    userName: `Angela`,
+    userAvatar: `path/to/img`,
+    rating: 5,
+    content: `Review`,
+    date: `21.10.2019`,
+  },
+  {
+    id: 14,
+    userName: `Angela`,
+    userAvatar: `path/to/img`,
+    rating: 5,
+    content: `Review`,
+    date: `21.10.2019`,
   }
 ];

@@ -17,14 +17,14 @@ exports[`Reviews list should be rendered 1`] = `
           alt="Reviews avatar"
           className="reviews__avatar user__avatar"
           height="54"
-          src="https://placedog.net/260/200?id=5"
+          src="path/to/img"
           width="54"
         />
       </div>
       <span
         className="reviews__user-name"
       >
-        Mini
+        Angela
       </span>
     </div>
     <div
@@ -39,7 +39,7 @@ exports[`Reviews list should be rendered 1`] = `
           <span
             style={
               Object {
-                "width": "80%",
+                "width": "100%",
               }
             }
           />
@@ -59,7 +59,66 @@ exports[`Reviews list should be rendered 1`] = `
         className="reviews__time"
         dateTime="2019-04-24"
       >
-        April 2019
+        21.10.2019
+      </time>
+    </div>
+  </li>
+  <li
+    className="reviews__item"
+  >
+    <div
+      className="reviews__user user"
+    >
+      <div
+        className="reviews__avatar-wrapper user__avatar-wrapper"
+      >
+        <img
+          alt="Reviews avatar"
+          className="reviews__avatar user__avatar"
+          height="54"
+          src="path/to/img"
+          width="54"
+        />
+      </div>
+      <span
+        className="reviews__user-name"
+      >
+        Angela
+      </span>
+    </div>
+    <div
+      className="reviews__info"
+    >
+      <div
+        className="reviews__rating rating"
+      >
+        <div
+          className="reviews__stars rating__stars"
+        >
+          <span
+            style={
+              Object {
+                "width": "100%",
+              }
+            }
+          />
+          <span
+            className="visually-hidden"
+          >
+            Rating
+          </span>
+        </div>
+      </div>
+      <p
+        className="reviews__text"
+      >
+        Review
+      </p>
+      <time
+        className="reviews__time"
+        dateTime="2019-04-24"
+      >
+        21.10.2019
       </time>
     </div>
   </li>

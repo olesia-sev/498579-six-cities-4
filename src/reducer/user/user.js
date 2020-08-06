@@ -51,7 +51,7 @@ const Operation = {
       });
   },
   login: (authData) => (dispatch, getState, api) => {
-    return api.post(`/login`, authData) // {}
+    return api.post(`/login`, authData)
       .then((response) => {
         dispatch(ActionCreator.setAuthInfo(response.data));
       })
