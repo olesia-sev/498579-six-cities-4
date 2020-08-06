@@ -3,6 +3,7 @@
 exports[`FavouriteButton should be rendered 1`] = `
 <button
   className="place-card__bookmark-button button place-card__bookmark-button--active"
+  onClick={[Function]}
   type="button"
 >
   <svg

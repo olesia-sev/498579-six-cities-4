@@ -5,7 +5,7 @@ import {ActionCreator} from "../../reducer/app/app";
 import PropTypes from 'prop-types';
 import {offerType} from "../../prop-types/prop-types";
 import {PLACE_CARD_THEME, Rating} from "../common/ratinig/ratinig";
-import {PLACE_CARD_FAV_BTN, FavouriteButton} from "../common/favourite-button/favourite-button";
+import FavouriteButton, {PLACE_CARD_FAV_BTN} from "../common/favourite-button/favourite-button";
 import {getFilteredOffers} from "../../reducer/data/selectors";
 
 export const MAIN_THEME = `main`;
@@ -39,7 +39,7 @@ const PlaceCardInfo = ({price, saved, rating, id, title, placeType}) => {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <FavouriteButton saved={saved} theme={PLACE_CARD_FAV_BTN} />
+          <FavouriteButton id={id} saved={saved} theme={PLACE_CARD_FAV_BTN} />
 
         </div>
 

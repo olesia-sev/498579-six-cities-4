@@ -1,4 +1,4 @@
-import {getRandomNumberInRange} from '../utils/functions';
+import {getRandomNumberInRange} from '../utils/utils';
 
 export default [
   {

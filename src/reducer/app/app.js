@@ -1,4 +1,4 @@
-import {extend, SORT_TYPES} from "../../utils/functions";
+import {extend, SORT_TYPES} from "../../utils/utils";
 
 export const initialState = {
   hoveredOffer: null,

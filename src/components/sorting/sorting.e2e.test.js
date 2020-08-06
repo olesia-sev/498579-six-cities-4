@@ -6,7 +6,7 @@ import configureStore from "redux-mock-store";
 import Sorting from "./sorting";
 import {NameSpace} from "../../reducer/name-space";
 import {cardDataArray} from "../../utils/test.utils";
-import {SORT_TYPES} from "../../utils/functions";
+import {SORT_TYPES} from "../../utils/utils";
 import {ActionCreator} from "../../reducer/app/app";
 
 Enzyme.configure({

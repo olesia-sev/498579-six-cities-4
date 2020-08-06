@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {offersTypeArray} from '../../prop-types/prop-types';
-import {getSortedOffers} from '../../utils/functions';
+import {getSortedOffers} from '../../utils/utils';
 import {getFilteredOffers} from '../../reducer/data/selectors';
 import {getActiveSortingType} from '../../reducer/app/selectors';
 import PlaceCard from '../place-card/place-card';

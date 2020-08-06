@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {offerType} from '../../prop-types/prop-types';
 import {getCurrentOffer} from '../../reducer/data/selectors';
 import {PROPERTY_THEME, Rating} from '../common/ratinig/ratinig';
-import {FavouriteButton, PROPERTY_FAV_BTN} from '../common/favourite-button/favourite-button';
+import FavouriteButton, {PROPERTY_FAV_BTN} from '../common/favourite-button/favourite-button';
 import PlacesList, {NEARBY_THEME} from '../places-list/places-list';
 import Map from '../map/map';
 import Header from '../common/header/header';
@@ -25,7 +25,7 @@ const PropertyGallery = ({images, title}) => {
   );
 };
 
-const PropertyHeader = ({premium, title, saved}) => {
+const PropertyHeader = ({id, premium, title, saved}) => {
   return (
     <React.Fragment>
       {premium ?
@@ -35,7 +35,7 @@ const PropertyHeader = ({premium, title, saved}) => {
       <div className="property__name-wrapper">
         <h1 className="property__name">{title}</h1>
 
-        <FavouriteButton saved={saved} theme={PROPERTY_FAV_BTN} />
+        <FavouriteButton id={id} saved={saved} theme={PROPERTY_FAV_BTN} />
 
       </div>
     </React.Fragment>
@@ -125,6 +125,7 @@ const Property = ({currentOffer, authStatus}) => {
   }
 
   const {
+    id,
     images,
     price,
     title,
@@ -157,7 +158,7 @@ const Property = ({currentOffer, authStatus}) => {
             <div className="property__container container">
               <div className="property__wrapper">
 
-                <PropertyHeader premium={premium} title={title} saved={saved} />
+                <PropertyHeader id={id} premium={premium} title={title} saved={saved} />
 
                 <Rating rating={rating} theme={PROPERTY_THEME} />
 
@@ -197,6 +198,7 @@ PropertyGallery.propTypes = {
 };
 
 PropertyHeader.propTypes = {
+  id: PropTypes.number.isRequired,
   premium: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   saved: PropTypes.bool.isRequired,

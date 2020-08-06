@@ -6,7 +6,7 @@ import configureStore from "redux-mock-store";
 import Property from "./property";
 import {cardDataArray, citiesArray} from "../../utils/test.utils";
 import {NameSpace} from "../../reducer/name-space";
-import {SORT_TYPES} from "../../utils/functions";
+import {SORT_TYPES} from "../../utils/utils";
 
 const mockStore = configureStore([]);
 

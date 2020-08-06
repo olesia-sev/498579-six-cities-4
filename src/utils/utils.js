@@ -29,3 +29,9 @@ export const getSortedOffers = (offers, activeSort) => {
 };
 
 export const MAX_REVIEWS_LENGTH = 10;
+
+export const AppRoute = {
+  LOGIN: `/login`,
+  ROOT: `/`,
+  FAVOURITES: `/favourites`
+};

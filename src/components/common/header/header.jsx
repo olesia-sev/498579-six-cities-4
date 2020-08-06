@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getAuthInfo, getAuthStatus} from "../../../reducer/user/selectors";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../../utils/utils";
 
 const Header = ({authStatus, authInfo}) => {
   return (
@@ -16,7 +18,7 @@ const Header = ({authStatus, authInfo}) => {
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <a className="header__nav-link header__nav-link--profile" href="#">
+                <span className="header__nav-link header__nav-link--profile">
                   <div
                     className="header__avatar-wrapper user__avatar-wrapper"
                     style={authInfo ? {backgroundImage: `url('${authInfo.avatar_url}')`} : {}}
@@ -24,12 +26,12 @@ const Header = ({authStatus, authInfo}) => {
                   </div>
                   {
                     authStatus === `NO_AUTH` ?
-                      <span className="header__login">Sign in</span> :
-                      <span className="header__user-name user__name">
+                      <Link className="header__login" to={AppRoute.LOGIN}>Sign in</Link> :
+                      <Link className="header__user-name user__name" to={AppRoute.FAVOURITES}>
                         {authInfo ? authInfo.email : ``}
-                      </span>
+                      </Link>
                   }
-                </a>
+                </span>
               </li>
             </ul>
           </nav>

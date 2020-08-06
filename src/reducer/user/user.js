@@ -1,4 +1,5 @@
-import {extend} from "../../utils/functions";
+import {AppRoute, extend} from "../../utils/utils";
+import {history} from "../../history";
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,
@@ -54,6 +55,7 @@ const Operation = {
     return api.post(`/login`, authData)
       .then((response) => {
         dispatch(ActionCreator.setAuthInfo(response.data));
+        history.push(AppRoute.ROOT);
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
