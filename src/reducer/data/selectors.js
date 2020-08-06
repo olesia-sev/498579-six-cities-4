@@ -9,6 +9,10 @@ export const getCurrentOffer = (state, offerId) => {
   return getOffers(state).find((offer) => offer.id === +offerId);
 };
 
+export const getCurrentOfferId = (state) => {
+  return getOffers(state).find((offer) => offer.id);
+};
+
 export const getActiveCityId = (state) => {
   return state[NameSpace.DATA].activeCityId;
 };
@@ -40,3 +44,7 @@ export const getFilteredOffers = createSelector(
       return offers.filter((offer) => offer.cityId === activeCityId);
     }
 );
+
+export const getReviews = (state) => {
+  return state[NameSpace.DATA].reviews;
+};

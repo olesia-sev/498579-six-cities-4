@@ -2,15 +2,16 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {offerType, reviewTypeArray} from '../../prop-types/prop-types';
+import {offerType} from '../../prop-types/prop-types';
 import {getCurrentOffer} from '../../reducer/data/selectors';
 import {PROPERTY_THEME, Rating} from '../common/ratinig/ratinig';
 import {FavouriteButton, PROPERTY_FAV_BTN} from '../common/favourite-button/favourite-button';
 import PlacesList, {NEARBY_THEME} from '../places-list/places-list';
 import Map from '../map/map';
 import Header from '../common/header/header';
-import {ReviewsList} from '../reviews-list/reviews-list';
 import {getAuthStatus} from "../../reducer/user/selectors";
+import {Operation as DataOperation} from "../../reducer/data/data";
+import {PropertyReviewSection} from '../property-review-section/property-review-section';
 
 const PropertyGallery = ({images, title}) => {
   return (
@@ -109,106 +110,6 @@ const PropertyHost = ({userPro, hostAvatar, hostName, description}) => {
   );
 };
 
-const PropertyReviewForm = () => {
-  return (
-    <form className="reviews__form form" action="#" method="post">
-      <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
-        <input className="form__rating-input visually-hidden"
-          name="rating"
-          value="5"
-          id="5-stars"
-          type="radio"
-        />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden"
-          name="rating"
-          value="4"
-          id="4-stars"
-          type="radio"
-        />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden"
-          name="rating"
-          value="3"
-          id="3-stars"
-          type="radio"
-        />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label"
-          title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden"
-          name="rating"
-          value="2"
-          id="2-stars"
-          type="radio"
-        />
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label"
-          title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden"
-          name="rating"
-          value="1"
-          id="1-star"
-          type="radio"
-        />
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label"
-          title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"/>
-          </svg>
-        </label>
-      </div>
-      <textarea className="reviews__textarea form__textarea"
-        id="review"
-        name="review"
-        placeholder="Tell how was your stay, what you like and what can be improved"/>
-      <div className="reviews__button-wrapper">
-        <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and
-          describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-        </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-      </div>
-    </form>
-  );
-};
-
-const PropertyReview = ({reviews, authStatus}) => {
-  return (
-    <section className="property__reviews reviews">
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-
-      <ReviewsList reviews={reviews} />
-
-      {
-        authStatus === `AUTH` ?
-          <PropertyReviewForm /> :
-          ``
-      }
-
-    </section>
-  );
-};
-
 const PropertyMap = () => {
   return (
     <section className="property__map map">
@@ -238,7 +139,6 @@ const Property = ({currentOffer, authStatus}) => {
     hostAvatar,
     userPro,
     description,
-    reviews,
   } = currentOffer;
 
   return (
@@ -269,7 +169,7 @@ const Property = ({currentOffer, authStatus}) => {
 
                 <PropertyHost userPro={userPro} hostAvatar={hostAvatar} hostName={hostName} description={description} />
 
-                <PropertyReview reviews={reviews} authStatus={authStatus} />
+                <PropertyReviewSection authStatus={authStatus} />
 
               </div>
             </div>
@@ -323,21 +223,23 @@ PropertyHost.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-PropertyReview.propTypes = {
-  reviews: reviewTypeArray,
-  authStatus: PropTypes.string.isRequired,
-};
-
 Property.propTypes = {
   currentOffer: offerType,
   authStatus: PropTypes.string.isRequired,
+  loadReviews: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     currentOffer: getCurrentOffer(state, ownProps.match.params.id),
     authStatus: getAuthStatus(state),
+    currentOfferId: getCurrentOffer(state, ownProps.match.params.id).id,
   };
 };
 
-export default withRouter(connect(mapStateToProps)(Property));
+const mapDispatchToProps = (dispatch) => ({
+  loadReviews: (offerId) => () => dispatch(DataOperation.loadReviews(offerId)),
+  postReview: (offerId, review) => dispatch(DataOperation.postReview(review)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Property));

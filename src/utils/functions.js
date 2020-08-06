@@ -27,3 +27,5 @@ export const getSortedOffers = (offers, activeSort) => {
       return offers.slice();
   }
 };
+
+export const MAX_REVIEWS_LENGTH = 10;
