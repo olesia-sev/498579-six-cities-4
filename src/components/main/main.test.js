@@ -16,6 +16,10 @@ it(`Main should be rendered`, () => {
       cities: citiesArray,
       offers: cardDataArray,
     },
+    [NameSpace.USER]: {
+      authorizationStatus: `NO_AUTH`,
+      authInfo: null,
+    }
   });
 
   const tree = renderer

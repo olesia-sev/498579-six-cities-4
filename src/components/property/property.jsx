@@ -8,8 +8,9 @@ import {PROPERTY_THEME, Rating} from '../common/ratinig/ratinig';
 import {FavouriteButton, PROPERTY_FAV_BTN} from '../common/favourite-button/favourite-button';
 import PlacesList, {NEARBY_THEME} from '../places-list/places-list';
 import Map from '../map/map';
-import {Header} from '../common/header/header';
+import Header from '../common/header/header';
 import {ReviewsList} from '../reviews-list/reviews-list';
+import {getAuthStatus} from "../../reducer/user/selectors";
 
 const PropertyGallery = ({images, title}) => {
   return (
@@ -191,14 +192,18 @@ const PropertyReviewForm = () => {
   );
 };
 
-const PropertyReview = ({reviews}) => {
+const PropertyReview = ({reviews, authStatus}) => {
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
 
       <ReviewsList reviews={reviews} />
 
-      <PropertyReviewForm />
+      {
+        authStatus === `AUTH` ?
+          <PropertyReviewForm /> :
+          ``
+      }
 
     </section>
   );
@@ -213,7 +218,7 @@ const PropertyMap = () => {
 };
 
 
-const Property = ({currentOffer}) => {
+const Property = ({currentOffer, authStatus}) => {
   if (!currentOffer) {
     return null;
   }
@@ -264,7 +269,7 @@ const Property = ({currentOffer}) => {
 
                 <PropertyHost userPro={userPro} hostAvatar={hostAvatar} hostName={hostName} description={description} />
 
-                <PropertyReview reviews={reviews} />
+                <PropertyReview reviews={reviews} authStatus={authStatus} />
 
               </div>
             </div>
@@ -320,15 +325,18 @@ PropertyHost.propTypes = {
 
 PropertyReview.propTypes = {
   reviews: reviewTypeArray,
+  authStatus: PropTypes.string.isRequired,
 };
 
 Property.propTypes = {
   currentOffer: offerType,
+  authStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     currentOffer: getCurrentOffer(state, ownProps.match.params.id),
+    authStatus: getAuthStatus(state),
   };
 };
 

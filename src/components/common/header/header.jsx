@@ -1,6 +1,9 @@
 import React from 'react';
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
+import {getAuthInfo, getAuthStatus} from "../../../reducer/user/selectors";
 
-const Header = () => {
+const Header = ({authStatus, authInfo}) => {
   return (
     <header className="header">
       <div className="container">
@@ -14,9 +17,18 @@ const Header = () => {
             <ul className="header__nav-list">
               <li className="header__nav-item user">
                 <a className="header__nav-link header__nav-link--profile" href="#">
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
+                  <div
+                    className="header__avatar-wrapper user__avatar-wrapper"
+                    style={authInfo ? {backgroundImage: `url('${authInfo.avatar_url}')`} : {}}
+                  >
                   </div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                  {
+                    authStatus === `NO_AUTH` ?
+                      <span className="header__login">Sign in</span> :
+                      <span className="header__user-name user__name">
+                        {authInfo ? authInfo.email : ``}
+                      </span>
+                  }
                 </a>
               </li>
             </ul>
@@ -27,4 +39,16 @@ const Header = () => {
   );
 };
 
-export {Header};
+Header.propTypes = {
+  authStatus: PropTypes.string.isRequired,
+  authInfo: PropTypes.object,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    authStatus: getAuthStatus(state),
+    authInfo: getAuthInfo(state),
+  };
+};
+
+export default connect(mapStateToProps)(Header);
