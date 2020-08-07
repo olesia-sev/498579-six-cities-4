@@ -4,6 +4,7 @@ import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import renderer from "react-test-renderer";
 import {NameSpace} from "../../reducer/name-space";
+import {BrowserRouter as Router} from "react-router-dom";
 
 const mockStore = configureStore([]);
 
@@ -17,9 +18,11 @@ it(`SignIn should be rendered`, () => {
 
   const tree = renderer
     .create(
-        <Provider store={store}>
-          <SignIn />
-        </Provider>
+        <Router>
+          <Provider store={store}>
+            <SignIn />
+          </Provider>
+        </Router>
     )
     .toJSON();
 

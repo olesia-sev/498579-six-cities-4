@@ -6,7 +6,7 @@ import PlacesList from "./places-list";
 import {cardDataArray, theme} from "../../utils/test.utils";
 import {BrowserRouter as Router} from "react-router-dom";
 import {NameSpace} from "../../reducer/name-space";
-import {SORT_TYPES} from "../../utils/functions";
+import {SORT_TYPES} from "../../utils/utils";
 
 const mockStore = configureStore([]);
 

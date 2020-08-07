@@ -1,7 +1,8 @@
-import {extend, MAX_REVIEWS_LENGTH} from "../../utils/functions";
+import {AppRoute, extend, MAX_REVIEWS_LENGTH} from "../../utils/utils";
 import {createOffers} from "../../adapters/offers";
 import {createCity} from "../../adapters/cities";
 import {mapReviews} from "../../adapters/reviews";
+import {history} from "../../history";
 
 export const initialState = {
   activeCityId: undefined,
@@ -15,6 +16,7 @@ const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
   SET_CITIES: `SET_CITIES`,
   SET_REVIEWS: `SET_REVIEWS`,
+  UPDATE_FAVOURITE: `UPDATE_FAVOURITE`,
 };
 
 const ActionCreator = {
@@ -34,13 +36,17 @@ const ActionCreator = {
     type: ActionType.SET_REVIEWS,
     payload: reviews,
   }),
+  updateFavourite: (offer) => ({
+    type: ActionType.UPDATE_FAVOURITE,
+    payload: offer,
+  })
 };
 
 const Operation = {
   loadOffers: () => (dispatch, getState, api) => {
     return api.get(`/hotels`)
       .then((response) => {
-        const loadedOffers = response.data.map((offer) => createOffers(offer));
+        const loadedOffers = response.data.map(createOffers);
         const cities = response.data.reduce((acc, offer) => {
           const city = createCity(offer);
           acc[city.id] = city;
@@ -74,6 +80,17 @@ const Operation = {
   postReview: (offerId, review) => (dispatch, getState, api) => {
     return api.post(`/comments/${offerId}`, review);
   },
+  postFavourite: (offerId, status) => (dispatch, getState, api) => {
+    return api.post(`/favorite/${offerId}/${status}`)
+      .then((response) => {
+        dispatch(ActionCreator.updateFavourite(response.data));
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          history.push(AppRoute.LOGIN);
+        }
+      });
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -93,6 +110,15 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_REVIEWS:
       return extend(state, {
         reviews: action.payload,
+      });
+    case ActionType.UPDATE_FAVOURITE:
+      return extend(state, {
+        offers: state.offers.map((offer) => {
+          if (offer.id === action.payload.id) {
+            return createOffers(action.payload);
+          }
+          return offer;
+        })
       });
   }
   return state;

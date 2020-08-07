@@ -9,7 +9,6 @@ import CitiesList from '../cities-list/cities-list';
 import PlacesList, {MAIN_THEME} from "../places-list/places-list";
 import Map from "../map/map";
 import Sorting from "../sorting/sorting";
-import SignIn from "../sign-in/sign-in";
 import {getAuthStatus} from "../../reducer/user/selectors";
 
 const MainContent = ({offers, currentCity}) => {
@@ -45,38 +44,29 @@ const MainContent = ({offers, currentCity}) => {
   );
 };
 
-const Main = ({offers, currentCity, authStatus}) => {
+const Main = ({offers, currentCity}) => {
 
   return (
     <React.Fragment>
-      <div className={`page page--gray ${authStatus === `NO_AUTH` ? `page--login` : `page--main`}`}>
+      <div className="page page--gray page--main">
 
         <Header />
 
         <main className={
-          `page__main
+          `page__main page__main--index
           ${offers.length === 0 ? `page__main--index-empty` : ``}
-          ${authStatus === `NO_AUTH` ? `page__main--login` : `page__main--index`}
           `}>
+          <h1 className="visually-hidden">Cities</h1>
 
-          {
-            authStatus === `NO_AUTH` ?
-              <SignIn /> :
-              <>
-                <h1 className="visually-hidden">Cities</h1>
+          <CitiesList />
 
-                <CitiesList />
-
-                <div className="cities">
-                  {
-                    offers.length === 0 ?
-                      <MainEmpty /> :
-                      <MainContent offers={offers} currentCity={currentCity} />
-                  }
-                </div>
-              </>
-          }
-
+          <div className="cities">
+            {
+              offers.length === 0 ?
+                <MainEmpty /> :
+                <MainContent offers={offers} currentCity={currentCity} />
+            }
+          </div>
         </main>
       </div>
     </React.Fragment>

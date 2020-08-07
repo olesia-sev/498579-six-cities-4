@@ -38,20 +38,21 @@ exports[`Property should be rendered 1`] = `
             <li
               className="header__nav-item user"
             >
-              <a
+              <span
                 className="header__nav-link header__nav-link--profile"
-                href="#"
               >
                 <div
                   className="header__avatar-wrapper user__avatar-wrapper"
                   style={Object {}}
                 />
-                <span
+                <a
                   className="header__login"
+                  href="/login"
+                  onClick={[Function]}
                 >
                   Sign in
-                </span>
-              </a>
+                </a>
+              </span>
             </li>
           </ul>
         </nav>
@@ -149,6 +150,7 @@ exports[`Property should be rendered 1`] = `
             </h1>
             <button
               className="property__bookmark-button button property__bookmark-button--active"
+              onClick={[Function]}
               type="button"
             >
               <svg
@@ -361,6 +363,7 @@ exports[`Property should be rendered 1`] = `
                 </div>
                 <button
                   className="place-card__bookmark-button button place-card__bookmark-button--active"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg
