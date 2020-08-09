@@ -6,8 +6,8 @@ import Header from '../common/header/header';
 import {offersTypeArray} from '../../prop-types/prop-types';
 import {MainEmpty} from '../main-empty/main-empty';
 import CitiesList from '../cities-list/cities-list';
-import PlacesList, {MAIN_THEME} from "../places-list/places-list";
-import Map from "../map/map";
+import {MainPlacesList, MAIN_THEME} from "../places-list/places-list";
+import {MainMap} from "../map/map";
 import Sorting from "../sorting/sorting";
 import {getAuthStatus} from "../../reducer/user/selectors";
 
@@ -33,11 +33,11 @@ const MainContent = ({offers, currentCity}) => {
 
         <Sorting />
 
-        <PlacesList theme={MAIN_THEME} />
+        <MainPlacesList theme={MAIN_THEME} />
       </section>
       <div className="cities__right-section">
         <section className="cities__map map">
-          <Map />
+          <MainMap />
         </section>
       </div>
     </div>
@@ -47,29 +47,27 @@ const MainContent = ({offers, currentCity}) => {
 const Main = ({offers, currentCity}) => {
 
   return (
-    <React.Fragment>
-      <div className="page page--gray page--main">
+    <div className="page page--gray page--main">
 
-        <Header />
+      <Header />
 
-        <main className={
-          `page__main page__main--index
-          ${offers.length === 0 ? `page__main--index-empty` : ``}
-          `}>
-          <h1 className="visually-hidden">Cities</h1>
+      <main className={
+        `page__main page__main--index
+        ${offers.length === 0 ? `page__main--index-empty` : ``}
+        `}>
+        <h1 className="visually-hidden">Cities</h1>
 
-          <CitiesList />
+        <CitiesList />
 
-          <div className="cities">
-            {
-              offers.length === 0 ?
-                <MainEmpty /> :
-                <MainContent offers={offers} currentCity={currentCity} />
-            }
-          </div>
-        </main>
-      </div>
-    </React.Fragment>
+        <div className="cities">
+          {
+            offers.length === 0 ?
+              <MainEmpty /> :
+              <MainContent offers={offers} currentCity={currentCity} />
+          }
+        </div>
+      </main>
+    </div>
   );
 };
 

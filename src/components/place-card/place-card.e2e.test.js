@@ -37,7 +37,7 @@ describe(`Place card test`, () => {
           </Provider>
         </Router>
     );
-    expect(placeCard.find(`Link`).props().to).toBe(`/offers/${cardDataArray[0].id}`);
+    expect(placeCard.find(`.place-card__name Link`).props().to).toBe(`/offers/${cardDataArray[0].id}`);
   });
 
   it(`Place card has proper classes according to its theme`, () => {

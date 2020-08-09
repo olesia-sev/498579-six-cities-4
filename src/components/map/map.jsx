@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import {connect} from "react-redux";
 import {offersTypeArray, offerType} from "../../prop-types/prop-types";
-import {getActiveCity, getFilteredOffers} from "../../reducer/data/selectors";
+import {getActiveCity, getFilteredOffers, offersNearbySelector} from "../../reducer/data/selectors";
 import {getHoveredOffer} from "../../reducer/app/selectors";
 
 const mapConfig = {
@@ -96,7 +96,7 @@ Map.propTypes = {
   }).isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mainMapStateToProps = (state) => {
   return {
     offers: getFilteredOffers(state),
     hoveredOffer: getHoveredOffer(state),
@@ -104,4 +104,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Map);
+const propertyMapStateToProps = (state) => {
+  return {
+    offers: offersNearbySelector(state),
+    hoveredOffer: getHoveredOffer(state),
+    activeCity: getActiveCity(state),
+  };
+};
+
+const MainMap = connect(mainMapStateToProps)(Map);
+const PropertyNearbyMap = connect(propertyMapStateToProps)(Map);
+
+export {MainMap, PropertyNearbyMap};

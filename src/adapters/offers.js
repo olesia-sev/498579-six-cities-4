@@ -19,16 +19,6 @@ export const createOffers = (offer) => {
       hostAvatar: offer.host.avatar_url,
       userPro: offer.host.is_pro,
       description: offer.description,
-      reviews: [
-        {
-          id: 12,
-          userName: `Max`,
-          userAvatar: `/img/avatar-max.jpg`,
-          rating: 4,
-          content: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
-          date: `April 2019`
-        },
-      ],
     }
   );
 };

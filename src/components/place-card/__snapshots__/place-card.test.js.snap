@@ -17,14 +17,15 @@ exports[`PlaceCard should be rendered 1`] = `
     className="cities__image-wrapper place-card__image-wrapper"
   >
     <a
-      href="#"
+      href="/offers/10"
+      onClick={[Function]}
     >
       <img
         alt="Place image"
         className="place-card__image"
-        height="200"
+        height={200}
         src="https://placedog.net/260/200?id=2"
-        width="260"
+        width={260}
       />
     </a>
   </div>

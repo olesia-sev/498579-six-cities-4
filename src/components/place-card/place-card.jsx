@@ -10,14 +10,28 @@ import {getFilteredOffers} from "../../reducer/data/selectors";
 
 export const MAIN_THEME = `main`;
 export const NEARBY_THEME = `nearby`;
+export const FAVOURITE_THEME = `favourite`;
 const themes = {
   [MAIN_THEME]: {
     article: `cities__place-card place-card`,
     imageWrapper: `cities__image-wrapper place-card__image-wrapper`,
+    infoWrapper: `place-card__info`,
+    imageWidth: 260,
+    imageHeight: 200,
   },
   [NEARBY_THEME]: {
     article: `near-places__card place-card`,
     imageWrapper: `near-places__image-wrapper place-card__image-wrapper`,
+    infoWrapper: `place-card__info`,
+    imageWidth: 260,
+    imageHeight: 200,
+  },
+  [FAVOURITE_THEME]: {
+    article: `favorites__card place-card`,
+    imageWrapper: `favorites__image-wrapper place-card__image-wrapper`,
+    infoWrapper: `favorites__card-info place-card__info`,
+    imageWidth: 150,
+    imageHeight: 110,
   },
 };
 
@@ -29,10 +43,12 @@ const PremiumMark = () => {
   );
 };
 
-const PlaceCardInfo = ({price, saved, rating, id, title, placeType}) => {
+const PlaceCardInfo = ({price, saved, rating, id, title, placeType, theme}) => {
+  const currentTheme = themes[theme];
+
   return (
     <React.Fragment>
-      <div className="place-card__info">
+      <div className={currentTheme.infoWrapper}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -69,22 +85,22 @@ const PlaceCard = ({theme, offer, setHoveredOffer}) => {
       }
 
       <div className={currentTheme.imageWrapper}>
-        <a href="#">
+        <Link to={`/offers/${offer.id}`}>
           <img className="place-card__image"
-            src={offer.img} width="260" height="200"
+            src={offer.img} width={currentTheme.imageWidth} height={currentTheme.imageHeight}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
 
-      <PlaceCardInfo {...offer} />
+      <PlaceCardInfo {...offer} theme={theme} />
 
     </article>
   );
 };
 
 PlaceCard.propTypes = {
-  theme: PropTypes.oneOf([MAIN_THEME, NEARBY_THEME]).isRequired,
+  theme: PropTypes.oneOf([MAIN_THEME, NEARBY_THEME, FAVOURITE_THEME]).isRequired,
   offer: offerType,
   setHoveredOffer: PropTypes.func.isRequired,
 };
@@ -96,8 +112,8 @@ PlaceCardInfo.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   placeType: PropTypes.string.isRequired,
+  theme: PropTypes.oneOf([MAIN_THEME, NEARBY_THEME, FAVOURITE_THEME]).isRequired,
 };
-
 
 const mapStateToProps = (state) => {
   return {

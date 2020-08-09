@@ -19,6 +19,7 @@ exports[`Main should be rendered 1`] = `
           <a
             className="header__logo-link"
             href="/"
+            onClick={[Function]}
           >
             <img
               alt="6 cities logo"
@@ -61,8 +62,8 @@ exports[`Main should be rendered 1`] = `
   </header>
   <main
     className="page__main page__main--index
-          page__main--index-empty
-          "
+        page__main--index-empty
+        "
   >
     <h1
       className="visually-hidden"

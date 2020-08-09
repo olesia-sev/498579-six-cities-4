@@ -1,4 +1,11 @@
 import {ActionType, ActionCreator} from './app';
+import {initialState, reducer} from "../data/data";
+
+describe(`Reducer tests`, () => {
+  it(`Reducer without additional parameters should return initial state`, () => {
+    expect(reducer(void 0, {})).toEqual(initialState);
+  });
+});
 
 describe(`Action creators work correctly`, () => {
   it(`Action creator sortOffers returns correct action`, () => {

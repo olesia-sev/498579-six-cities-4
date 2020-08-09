@@ -33,5 +33,6 @@ export const MAX_REVIEWS_LENGTH = 10;
 export const AppRoute = {
   LOGIN: `/login`,
   ROOT: `/`,
-  FAVOURITES: `/favourites`
+  FAVOURITES: `/favorites`,
+  OFFER_DETAIL: `/offers/:id`,
 };

@@ -2,6 +2,7 @@ import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../api.js";
 import {reducer, ActionType, ActionCreator, initialState, Operation} from './data';
 import {createCity} from "../../adapters/cities";
+import {cardDataArray, citiesArray} from "../../utils/test.utils";
 
 const api = createAPI(() => {});
 
@@ -49,19 +50,35 @@ const offersResult = [
     premium: false,
     price: 813,
     rating: 2,
-    reviews: [
-      {
-        content: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
-        date: `April 2019`,
-        id: 12,
-        rating: 4,
-        userAvatar: `/img/avatar-max.jpg`,
-        userName: `Max`
-      }
-    ],
     saved: false,
     title: `Wood and stone place`,
     userPro: true
+  }
+];
+
+const reviewRaw = [
+  {
+    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    date: `2019-05-08T14:13:56.569Z`,
+    id: 1,
+    rating: 4,
+    user: {
+      [`avatar_url`]: `img/1.png`,
+      id: 4,
+      [`is_pro`]: false,
+      name: `Max`
+    }
+  }
+];
+
+const reviewsResult = [
+  {
+    content: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    date: `April 2019`,
+    id: 1,
+    rating: 4,
+    userAvatar: `img/1.png`,
+    userName: `Max`
   }
 ];
 
@@ -78,6 +95,49 @@ describe(`Action creators work correctly`, () => {
       payload: 20,
     });
   });
+
+  it(`Action creator loadOffers returns correct action`, () => {
+    expect(ActionCreator.loadOffers(cardDataArray)).toEqual({
+      type: ActionType.LOAD_OFFERS,
+      payload: cardDataArray,
+    });
+  });
+
+  it(`Action creator setCities returns correct action`, () => {
+    expect(ActionCreator.setCities(citiesArray)).toEqual({
+      type: ActionType.SET_CITIES,
+      payload: citiesArray,
+    });
+  });
+
+  it(`Action creator setReviews returns correct action`, () => {
+    expect(ActionCreator.setReviews([{fake: true}])).toEqual({
+      type: ActionType.SET_REVIEWS,
+      payload: [{fake: true}],
+    });
+  });
+
+  it(`Action creator updateFavourite returns correct action`, () => {
+    expect(ActionCreator.updateFavourite({fake: true})).toEqual({
+      type: ActionType.UPDATE_FAVOURITE,
+      payload: {fake: true},
+    });
+  });
+
+  it(`Action creator setFavourites returns correct action`, () => {
+    expect(ActionCreator.setFavourites([{fake: true}])).toEqual({
+      type: ActionType.SET_FAVOURITES,
+      payload: [{fake: true}],
+    });
+  });
+
+  it(`Action creator setOffersNearby returns correct action`, () => {
+    expect(ActionCreator.setOffersNearby([{fake: true}])).toEqual({
+      type: ActionType.GET_OFFERS_NEARBY,
+      payload: [{fake: true}],
+    });
+  });
+
 });
 
 describe(`Operation works correctly`, () => {
@@ -116,4 +176,97 @@ describe(`Operation works correctly`, () => {
         });
       });
   });
+
+  it(`Should make a correct API call to /comments/offerId`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const reviewsLoader = Operation.loadReviews(offersResult[0].id);
+
+    apiMock
+      .onGet(`/comments/${offersResult[0].id}`)
+      .reply(200, [...reviewRaw]);
+
+    return reviewsLoader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: ActionType.SET_REVIEWS,
+          payload: [...reviewsResult]
+        });
+
+      });
+  });
+
+  it(`Should make a correct API call to /favorite`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const reviewsLoader = Operation.loadFavourites(offersResult[0]);
+
+    apiMock
+      .onGet(`/favorite`)
+      .reply(200, [...offersRaw]);
+
+    return reviewsLoader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: ActionType.SET_FAVOURITES,
+          payload: [...offersResult]
+        });
+      });
+  });
+
+  it(`Should make a correct API call to /hotels/hotelId/nearby`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const reviewsLoader = Operation.getOffersNearby(offersResult[0].id);
+
+    apiMock
+      .onGet(`/hotels/${offersResult[0].id}/nearby`)
+      .reply(200, [...offersRaw]);
+
+    return reviewsLoader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: ActionType.GET_OFFERS_NEARBY,
+          payload: [...offersResult]
+        });
+      });
+  });
+
+  it(`Should make a correct API call to /comments/offerId`, function () {
+    const apiMock = new MockAdapter(api);
+    const postReview = Operation.postReview(
+        offersResult[0].id,
+        {comment: `comment text`, rating: 5}
+    );
+
+    apiMock
+      .onPost(`/comments/${offersResult[0].id}`)
+      .reply(200, [...reviewRaw]);
+
+    return postReview(() => {}, () => {}, api)
+      .then((response) => {
+        expect(response.data).toEqual(reviewRaw);
+      });
+  });
+
+  it(`Should make a correct API call to /favorite/offerId/status`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const postFavouriteOffer = Operation.postFavourite(
+        offersResult[0].id,
+        1
+    );
+
+    apiMock
+      .onPost(`/favorite/${offersResult[0].id}/1`)
+      .reply(200, offersResult[0]);
+
+    return postFavouriteOffer(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch.mock.calls.length).toBe(1);
+        expect(dispatch.mock.calls[0][0]).toEqual(ActionCreator.updateFavourite(offersResult[0]));
+      });
+  });
+
+
 });

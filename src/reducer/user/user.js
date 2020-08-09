@@ -48,7 +48,7 @@ const Operation = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error(`[AUTH ERROR]`, error.message);
+        console.log(`[AUTH ERROR]`, error.message);
       });
   },
   login: (authData) => (dispatch, getState, api) => {
@@ -59,7 +59,7 @@ const Operation = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error(`[LOGIN ERROR]`, error.message);
+        console.log(`[LOGIN ERROR]`, error.message);
       });
   },
 };

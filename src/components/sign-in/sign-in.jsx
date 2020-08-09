@@ -4,6 +4,8 @@ import {Operation as UserOperation} from "../../reducer/user/user";
 import {connect} from "react-redux";
 import {getAuthStatus} from "../../reducer/user/selectors";
 import Header from "../common/header/header";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../utils/utils";
 
 const SignIn = ({login}) => {
   /** @type Object */
@@ -71,9 +73,9 @@ const SignIn = ({login}) => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link to={AppRoute.ROOT} className="locations__item-link">
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>

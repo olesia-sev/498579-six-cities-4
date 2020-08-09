@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -6,8 +6,8 @@ import {offerType} from '../../prop-types/prop-types';
 import {getCurrentOffer} from '../../reducer/data/selectors';
 import {PROPERTY_THEME, Rating} from '../common/ratinig/ratinig';
 import FavouriteButton, {PROPERTY_FAV_BTN} from '../common/favourite-button/favourite-button';
-import PlacesList, {NEARBY_THEME} from '../places-list/places-list';
-import Map from '../map/map';
+import {NearbyPlacesList, NEARBY_THEME} from '../places-list/places-list';
+import {PropertyNearbyMap} from '../map/map';
 import Header from '../common/header/header';
 import {getAuthStatus} from "../../reducer/user/selectors";
 import {Operation as DataOperation} from "../../reducer/data/data";
@@ -16,7 +16,7 @@ import {PropertyReviewSection} from '../property-review-section/property-review-
 const PropertyGallery = ({images, title}) => {
   return (
     <div className="property__gallery">
-      {images.map((image, i) => (
+      {images.slice(0, 6).map((image, i) => (
         <div key={`${i}-${image}`} className="property__image-wrapper">
           <img className="property__image" src={image} alt={title} />
         </div>
@@ -113,13 +113,13 @@ const PropertyHost = ({userPro, hostAvatar, hostName, description}) => {
 const PropertyMap = () => {
   return (
     <section className="property__map map">
-      <Map />
+      <PropertyNearbyMap />
     </section>
   );
 };
 
 
-const Property = ({currentOffer, authStatus}) => {
+const Property = ({currentOffer, authStatus, getOffersNearby}) => {
   if (!currentOffer) {
     return null;
   }
@@ -141,6 +141,18 @@ const Property = ({currentOffer, authStatus}) => {
     userPro,
     description,
   } = currentOffer;
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getOffersNearby().then(() => {
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <React.Fragment>
@@ -182,7 +194,7 @@ const Property = ({currentOffer, authStatus}) => {
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
 
-              <PlacesList theme={NEARBY_THEME} />
+              <NearbyPlacesList theme={NEARBY_THEME} />
 
             </section>
           </div>
@@ -228,20 +240,18 @@ PropertyHost.propTypes = {
 Property.propTypes = {
   currentOffer: offerType,
   authStatus: PropTypes.string.isRequired,
-  loadReviews: PropTypes.func.isRequired,
+  getOffersNearby: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     currentOffer: getCurrentOffer(state, ownProps.match.params.id),
     authStatus: getAuthStatus(state),
-    currentOfferId: getCurrentOffer(state, ownProps.match.params.id).id,
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  loadReviews: (offerId) => () => dispatch(DataOperation.loadReviews(offerId)),
-  postReview: (offerId, review) => dispatch(DataOperation.postReview(review)),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  getOffersNearby: () => dispatch(DataOperation.getOffersNearby(ownProps.match.params.id))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Property));

@@ -9,6 +9,8 @@ export const initialState = {
   offers: [],
   cities: [],
   reviews: [],
+  favourites: [],
+  offersNearby: [],
 };
 
 const ActionType = {
@@ -17,6 +19,8 @@ const ActionType = {
   SET_CITIES: `SET_CITIES`,
   SET_REVIEWS: `SET_REVIEWS`,
   UPDATE_FAVOURITE: `UPDATE_FAVOURITE`,
+  SET_FAVOURITES: `SET_FAVOURITES`,
+  GET_OFFERS_NEARBY: `GET_OFFERS_NEARBY`,
 };
 
 const ActionCreator = {
@@ -36,10 +40,18 @@ const ActionCreator = {
     type: ActionType.SET_REVIEWS,
     payload: reviews,
   }),
-  updateFavourite: (offer) => ({
+  updateFavourite: (favourite) => ({
     type: ActionType.UPDATE_FAVOURITE,
-    payload: offer,
-  })
+    payload: favourite,
+  }),
+  setFavourites: (favourites) => ({
+    type: ActionType.SET_FAVOURITES,
+    payload: favourites,
+  }),
+  setOffersNearby: (offers) => ({
+    type: ActionType.GET_OFFERS_NEARBY,
+    payload: offers,
+  }),
 };
 
 const Operation = {
@@ -58,7 +70,7 @@ const Operation = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error(`[HOTELS ERROR]`, error.message);
+        console.log(`[HOTELS ERROR]`, error.message);
       });
   },
   loadReviews: (offerId) => (dispatch, getState, api) => {
@@ -68,13 +80,14 @@ const Operation = {
             ActionCreator.setReviews(
                 response.data
                   .slice(Math.max(response.data.length - MAX_REVIEWS_LENGTH, 0))
+                  .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
                   .map(mapReviews)
             )
         );
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error(`[COMMENTS ERROR]`, error.message);
+        console.log(`[COMMENTS ERROR]`, error.message);
       });
   },
   postReview: (offerId, review) => (dispatch, getState, api) => {
@@ -90,7 +103,30 @@ const Operation = {
           history.push(AppRoute.LOGIN);
         }
       });
-  }
+  },
+  loadFavourites: () => (dispatch, getState, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        const loadedFavourites = response.data.map(createOffers);
+        dispatch(ActionCreator.setFavourites(loadedFavourites));
+      })
+      .catch((error) => {
+        history.push(AppRoute.LOGIN);
+        // eslint-disable-next-line no-console
+        console.log(`[FAVOURITES ERROR]`, error.message);
+      });
+  },
+  getOffersNearby: (hotelId) => (dispatch, getState, api) => {
+    return api.get(`/hotels/${hotelId}/nearby`)
+      .then((response) => {
+        const loadedOffersNearby = response.data.map(createOffers);
+        dispatch(ActionCreator.setOffersNearby(loadedOffersNearby));
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(`[OFFERS NEARBY ERROR]`, error.message);
+      });
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -119,6 +155,14 @@ const reducer = (state = initialState, action) => {
           }
           return offer;
         })
+      });
+    case ActionType.SET_FAVOURITES:
+      return extend(state, {
+        favourites: action.payload
+      });
+    case ActionType.GET_OFFERS_NEARBY:
+      return extend(state, {
+        offersNearby: action.payload
       });
   }
   return state;

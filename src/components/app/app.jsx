@@ -9,10 +9,11 @@ import {Operation as UserOperation} from "../../reducer/user/user";
 import {Operation as DataOperation} from "../../reducer/data/data";
 import {history} from "../../history";
 import SignIn from "../sign-in/sign-in";
-import {Favourites} from "../favourites/favourites";
+import Favourites from "../favourites/favourites";
 import {AppRoute} from "../../utils/utils";
+import {isUserAuthorizedSelector} from "../../reducer/user/selectors";
 
-const App = ({checkAuthStatus, loadOffers}) => {
+const App = ({isUserAuthorized, checkAuthStatus, loadOffers}) => {
   const [loaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const App = ({checkAuthStatus, loadOffers}) => {
         setIsLoaded(true);
       });
     });
-  }, []);
+  }, [isUserAuthorized]);
 
   if (!loaded) {
     return null;
@@ -42,7 +43,7 @@ const App = ({checkAuthStatus, loadOffers}) => {
           <Favourites />
         </Route>
 
-        <Route path="/offers/:id">
+        <Route path={AppRoute.OFFER_DETAIL}>
           <Property />
         </Route>
 
@@ -60,17 +61,24 @@ const App = ({checkAuthStatus, loadOffers}) => {
 };
 
 App.propTypes = {
+  isUserAuthorized: PropTypes.bool.isRequired,
   checkAuthStatus: PropTypes.func.isRequired,
   loadOffers: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    isUserAuthorized: isUserAuthorizedSelector(state),
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     checkAuthStatus: () => dispatch(UserOperation.checkAuthStatus()),
-    loadOffers: () => dispatch(DataOperation.loadOffers())
+    loadOffers: () => dispatch(DataOperation.loadOffers()),
   };
 };
 
-const ConnectedApp = connect(null, mapDispatchToProps)(App);
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export {ConnectedApp as App};

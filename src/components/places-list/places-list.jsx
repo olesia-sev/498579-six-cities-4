@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {offersTypeArray} from '../../prop-types/prop-types';
 import {getSortedOffers} from '../../utils/utils';
-import {getFilteredOffers} from '../../reducer/data/selectors';
+import {getFilteredOffers, offersNearbySelector} from '../../reducer/data/selectors';
 import {getActiveSortingType} from '../../reducer/app/selectors';
 import PlaceCard from '../place-card/place-card';
 
@@ -38,11 +38,21 @@ PlacesList.propTypes = {
   offers: offersTypeArray,
 };
 
-const mapStateToProps = (state) => {
+const mainPlacesListMapStateToProps = (state) => {
   const currentCityOffers = getSortedOffers(getFilteredOffers(state), getActiveSortingType(state));
   return {
     offers: currentCityOffers,
   };
 };
 
-export default connect(mapStateToProps)(PlacesList);
+const nearbyPlacesListMapStateToProps = (state) => {
+  return {
+    offers: offersNearbySelector(state),
+  };
+};
+
+const MainPlacesList = connect(mainPlacesListMapStateToProps)(PlacesList);
+
+const NearbyPlacesList = connect(nearbyPlacesListMapStateToProps)(PlacesList);
+
+export {MainPlacesList, NearbyPlacesList};

@@ -52,7 +52,7 @@ const PropertyReviewForm = ({postReview, loadReviews}) => {
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
-          console.error(error);
+          console.log(error);
           // eslint-disable-next-line no-alert
           alert(`Произошла ошибка, попробуйте ещё раз`);
         })

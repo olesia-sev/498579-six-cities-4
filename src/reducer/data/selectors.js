@@ -48,3 +48,18 @@ export const getFilteredOffers = createSelector(
 export const getReviews = (state) => {
   return state[NameSpace.DATA].reviews;
 };
+
+export const getFavourites = (state) => {
+  return state[NameSpace.DATA].favourites;
+};
+
+export const getFavouritesLocations = createSelector(
+    getFavourites,
+    (result) => {
+      return Array.from(new Set(result.map((it) => it.cityId)));
+    }
+);
+
+export const offersNearbySelector = (state) => {
+  return state[NameSpace.DATA].offersNearby;
+};
