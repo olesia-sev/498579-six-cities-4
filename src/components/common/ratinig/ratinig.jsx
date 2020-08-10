@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {RATING_STAR_WIDTH} from "../../../utils/utils";
 
 export const PLACE_CARD_THEME = `place-card`;
 export const REVIEWS_THEME = `reviews`;
@@ -25,7 +26,7 @@ const Rating = ({theme, rating}) => {
   return (
     <div className={currentTheme.rating}>
       <div className={currentTheme.ratingStars}>
-        <span style={{width: `${Math.round(rating) * 20}%`}} />
+        <span style={{width: `${Math.round(rating) * RATING_STAR_WIDTH}%`}} />
         <span className="visually-hidden">Rating</span>
       </div>
     </div>

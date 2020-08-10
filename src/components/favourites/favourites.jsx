@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Header from "../common/header/header";
 import {Footer} from "../common/footer/footer";
 import {connect} from "react-redux";
-import {getFavourites, getFavouritesLocations} from "../../reducer/data/selectors";
+import {getFavoritesOffers, getFavouritesLocations} from "../../reducer/data/selectors";
 import {Operation as DataOperation} from "../../reducer/data/data";
 import PropTypes from "prop-types";
 import {FavouritesItem} from "../favourites-item/favourites-item";
@@ -32,7 +32,6 @@ const Favourites = ({isUserAuthorized, favourites, favouritesLocations, loadFavo
   useEffect(() => {
     if (isUserAuthorized) {
       loadFavourites().then(() => {
-        // console.log('OLOLO');
         setIsLoaded(true);
       });
     }
@@ -80,7 +79,7 @@ Favourites.propTypes = {
 const mapStateToProps = (state) => {
   return {
     isUserAuthorized: isUserAuthorizedSelector(state),
-    favourites: getFavourites(state),
+    favourites: getFavoritesOffers(state),
     favouritesLocations: getFavouritesLocations(state),
   };
 };

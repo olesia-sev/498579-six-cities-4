@@ -47,26 +47,24 @@ const PlaceCardInfo = ({price, saved, rating, id, title, placeType, theme}) => {
   const currentTheme = themes[theme];
 
   return (
-    <React.Fragment>
-      <div className={currentTheme.infoWrapper}>
-        <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
-          </div>
-
-          <FavouriteButton id={id} saved={saved} theme={PLACE_CARD_FAV_BTN} />
-
+    <div className={currentTheme.infoWrapper}>
+      <div className="place-card__price-wrapper">
+        <div className="place-card__price">
+          <b className="place-card__price-value">&euro;{price}</b>
+          <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
 
-        <Rating rating={rating} theme={PLACE_CARD_THEME} />
+        <FavouriteButton id={id} saved={saved} theme={PLACE_CARD_FAV_BTN} />
 
-        <h2 className="place-card__name">
-          <Link to={`/offers/${id}`}>{title}</Link>
-        </h2>
-        <p className="place-card__type">{placeType}</p>
       </div>
-    </React.Fragment>
+
+      <Rating rating={rating} theme={PLACE_CARD_THEME} />
+
+      <h2 className="place-card__name">
+        <Link to={`/offers/${id}`}>{title}</Link>
+      </h2>
+      <p className="place-card__type">{placeType}</p>
+    </div>
   );
 };
 

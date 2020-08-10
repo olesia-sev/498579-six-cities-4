@@ -12,11 +12,12 @@ import Header from '../common/header/header';
 import {getAuthStatus} from "../../reducer/user/selectors";
 import {Operation as DataOperation} from "../../reducer/data/data";
 import {PropertyReviewSection} from '../property-review-section/property-review-section';
+import {MAX_IMAGES_AMOUNT, SLICE_BEGIN} from "../../utils/utils";
 
 const PropertyGallery = ({images, title}) => {
   return (
     <div className="property__gallery">
-      {images.slice(0, 6).map((image, i) => (
+      {images.slice(SLICE_BEGIN, MAX_IMAGES_AMOUNT).map((image, i) => (
         <div key={`${i}-${image}`} className="property__image-wrapper">
           <img className="property__image" src={image} alt={title} />
         </div>

@@ -21,7 +21,7 @@ const PropertyReviewForm = ({postReview, loadReviews}) => {
   /** @type Object */
   const commentRef = useRef(``);
 
-  const onFormChangeHandler = useCallback((evt) => {
+  const handleFormChange = useCallback((evt) => {
     if (evt.target.name === `rating`) {
       ratingRef.current = +evt.target.value || 0;
     }
@@ -37,7 +37,7 @@ const PropertyReviewForm = ({postReview, loadReviews}) => {
     }
   }, []);
 
-  const onFormSubmitHandler = useCallback((evt) => {
+  const handleFormSubmit = useCallback((evt) => {
     evt.preventDefault();
 
     if (!disabledVariant) {
@@ -64,7 +64,7 @@ const PropertyReviewForm = ({postReview, loadReviews}) => {
     }
   }, [disabledVariant, postReview]);
 
-  const onFormResetHandler = useCallback(() => {
+  const hanlerFormReset = useCallback(() => {
     setDisabledVariant(DisabledVariant.NOT_FILLED);
     ratingRef.current = 0;
     commentRef.current = ``;
@@ -75,9 +75,9 @@ const PropertyReviewForm = ({postReview, loadReviews}) => {
       className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={onFormSubmitHandler}
-      onChange={onFormChangeHandler}
-      onReset={onFormResetHandler}
+      onSubmit={handleFormSubmit}
+      onChange={handleFormChange}
+      onReset={hanlerFormReset}
       ref={formRef}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>

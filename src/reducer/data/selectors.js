@@ -9,10 +9,6 @@ export const getCurrentOffer = (state, offerId) => {
   return getOffers(state).find((offer) => offer.id === +offerId);
 };
 
-export const getCurrentOfferId = (state) => {
-  return getOffers(state).find((offer) => offer.id);
-};
-
 export const getActiveCityId = (state) => {
   return state[NameSpace.DATA].activeCityId;
 };
@@ -20,14 +16,6 @@ export const getActiveCityId = (state) => {
 export const getCities = (state) => {
   return state[NameSpace.DATA].cities;
 };
-
-export const getCitiesCoords = createSelector(
-    getOffers,
-    getActiveCityId,
-    (offers, activeCityId) => {
-      return offers.find((offer) => offer.cityLocation === activeCityId);
-    }
-);
 
 export const getActiveCity = createSelector(
     getCities,
@@ -53,8 +41,22 @@ export const getFavourites = (state) => {
   return state[NameSpace.DATA].favourites;
 };
 
+export const getFavoriteOffersIds = createSelector(
+    getOffers,
+    (offers) => {
+      return offers.filter((offer) => offer.saved).map((offer) => offer.id);
+    }
+);
+
+export const getFavoritesOffers = createSelector(
+    [getFavourites, getFavoriteOffersIds],
+    (favorites, offersIds) => {
+      return favorites.filter((favoriteOffer) => offersIds.includes(favoriteOffer.id));
+    }
+);
+
 export const getFavouritesLocations = createSelector(
-    getFavourites,
+    getFavoritesOffers,
     (result) => {
       return Array.from(new Set(result.map((it) => it.cityId)));
     }

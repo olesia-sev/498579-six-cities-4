@@ -14,7 +14,7 @@ const SignIn = ({login}) => {
   /** @type Object */
   const passwordInputRef = useRef(null);
 
-  const onAuthFormSubmit = useCallback((evt) => {
+  const handleAuthFormSubmit = useCallback((evt) => {
     evt.preventDefault();
 
     if (
@@ -39,7 +39,7 @@ const SignIn = ({login}) => {
               className="login__form form"
               action="#"
               method="post"
-              onSubmit={onAuthFormSubmit}
+              onSubmit={handleAuthFormSubmit}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>

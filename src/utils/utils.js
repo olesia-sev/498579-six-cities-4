@@ -1,7 +1,3 @@
-export const getRandomNumberInRange = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
@@ -36,3 +32,8 @@ export const AppRoute = {
   FAVOURITES: `/favorites`,
   OFFER_DETAIL: `/offers/:id`,
 };
+
+export const RATING_STAR_WIDTH = 20;
+
+export const MAX_IMAGES_AMOUNT = 6;
+export const SLICE_BEGIN = 0;

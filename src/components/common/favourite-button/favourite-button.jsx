@@ -21,7 +21,7 @@ const themes = {
 const FavouriteButton = ({theme, saved, postFavourite}) => {
   const currentTheme = themes[theme];
 
-  const onFavouriteButtonClick = useCallback((evt) => {
+  const handleFavouriteButtonClick = useCallback((evt) => {
     evt.preventDefault();
     postFavourite(+!saved);
   }, [postFavourite, saved]);
@@ -30,7 +30,7 @@ const FavouriteButton = ({theme, saved, postFavourite}) => {
     <button
       className={`${currentTheme.button} ${saved ? currentTheme.buttonActive : ``}`}
       type="button"
-      onClick={onFavouriteButtonClick}
+      onClick={handleFavouriteButtonClick}
     >
       <svg className={currentTheme.buttonSvg} width="18" height="19">
         <use xlinkHref="#icon-bookmark" />

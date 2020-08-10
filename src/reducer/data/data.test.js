@@ -117,10 +117,10 @@ describe(`Action creators work correctly`, () => {
     });
   });
 
-  it(`Action creator updateFavourite returns correct action`, () => {
-    expect(ActionCreator.updateFavourite({fake: true})).toEqual({
-      type: ActionType.UPDATE_FAVOURITE,
-      payload: {fake: true},
+  it(`Action creator updateFavourites returns correct action`, () => {
+    expect(ActionCreator.updateFavourites([{fake: true}])).toEqual({
+      type: ActionType.UPDATE_FAVOURITES,
+      payload: [{fake: true}],
     });
   });
 
@@ -199,16 +199,16 @@ describe(`Operation works correctly`, () => {
   it(`Should make a correct API call to /favorite`, function () {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const reviewsLoader = Operation.loadFavourites(offersResult[0]);
+    const favoritesLoader = Operation.loadFavourites(offersResult[0]);
 
     apiMock
       .onGet(`/favorite`)
       .reply(200, [...offersRaw]);
 
-    return reviewsLoader(dispatch, () => {}, api)
+    return favoritesLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch.mock.calls[0][0]).toEqual({
-          type: ActionType.SET_FAVOURITES,
+          type: ActionType.UPDATE_FAVOURITES,
           payload: [...offersResult]
         });
       });
@@ -259,14 +259,12 @@ describe(`Operation works correctly`, () => {
 
     apiMock
       .onPost(`/favorite/${offersResult[0].id}/1`)
-      .reply(200, offersResult[0]);
+      .reply(200, offersRaw[0]);
 
     return postFavouriteOffer(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch.mock.calls.length).toBe(1);
-        expect(dispatch.mock.calls[0][0]).toEqual(ActionCreator.updateFavourite(offersResult[0]));
+        expect(dispatch.mock.calls[0][0]).toEqual(ActionCreator.updateFavourites([offersResult[0]]));
       });
   });
-
-
 });

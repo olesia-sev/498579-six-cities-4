@@ -18,7 +18,7 @@ const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
   SET_CITIES: `SET_CITIES`,
   SET_REVIEWS: `SET_REVIEWS`,
-  UPDATE_FAVOURITE: `UPDATE_FAVOURITE`,
+  UPDATE_FAVOURITES: `UPDATE_FAVOURITES`,
   SET_FAVOURITES: `SET_FAVOURITES`,
   GET_OFFERS_NEARBY: `GET_OFFERS_NEARBY`,
 };
@@ -40,9 +40,9 @@ const ActionCreator = {
     type: ActionType.SET_REVIEWS,
     payload: reviews,
   }),
-  updateFavourite: (favourite) => ({
-    type: ActionType.UPDATE_FAVOURITE,
-    payload: favourite,
+  updateFavourites: (favourites) => ({
+    type: ActionType.UPDATE_FAVOURITES,
+    payload: favourites,
   }),
   setFavourites: (favourites) => ({
     type: ActionType.SET_FAVOURITES,
@@ -96,10 +96,12 @@ const Operation = {
   postFavourite: (offerId, status) => (dispatch, getState, api) => {
     return api.post(`/favorite/${offerId}/${status}`)
       .then((response) => {
-        dispatch(ActionCreator.updateFavourite(response.data));
+        dispatch(ActionCreator.updateFavourites([createOffers(response.data)]));
       })
       .catch((error) => {
-        if (error.response.status === 401) {
+        // eslint-disable-next-line no-console
+        console.log(`[ERROR]`, error);
+        if (error.response && error.response.status === 401) {
           history.push(AppRoute.LOGIN);
         }
       });
@@ -108,6 +110,7 @@ const Operation = {
     return api.get(`/favorite`)
       .then((response) => {
         const loadedFavourites = response.data.map(createOffers);
+        dispatch(ActionCreator.updateFavourites(loadedFavourites));
         dispatch(ActionCreator.setFavourites(loadedFavourites));
       })
       .catch((error) => {
@@ -147,11 +150,16 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         reviews: action.payload,
       });
-    case ActionType.UPDATE_FAVOURITE:
+    case ActionType.UPDATE_FAVOURITES:
+      const offersToUpdateMap = action.payload.reduce((acc, offer) => {
+        acc[offer.id] = offer;
+        return acc;
+      }, {});
+
       return extend(state, {
         offers: state.offers.map((offer) => {
-          if (offer.id === action.payload.id) {
-            return createOffers(action.payload);
+          if (offersToUpdateMap[offer.id]) {
+            return offersToUpdateMap[offer.id];
           }
           return offer;
         })
